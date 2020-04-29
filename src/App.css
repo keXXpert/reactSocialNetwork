@@ -12,7 +12,10 @@
   gap: 10px;
 }
 
-
+.app-wrapper-content {
+  grid-area: c;
+  background-color: darkgrey;
+}
 
 /* .App {
   text-align: center;
