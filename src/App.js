@@ -15,10 +15,6 @@ import Profile from './components/Profile/Profile';
 
 const App = (props) => {
 
-  let posts = props.posts;
-  let dialogs = props.dialogs;
-  let messages = props.messages;
-
   return (
     <BrowserRouter>
       <div className='app-wrapper'>
@@ -27,15 +23,15 @@ const App = (props) => {
         <div className='app-wrapper-content'>
           <Route 
             exact path='/' 
-            render={(props) => <Profile {...props} posts={posts} />}
+            render={() => <Profile posts={props.posts} />}
           />
           <Route 
             path='/profile'
-            render={(props) => <Profile {...props} posts={posts} />}
+            render={() => <Profile posts={props.posts} />}
           />
           <Route 
             path='/dialogs'
-            render={(props) => <Dialogs {...props} dialogs={dialogs} messages={messages} />}
+            render={() => <Dialogs dialogs={props.dialogs} messages={props.messages} />}
           />
           <Route path='/news' component={News} />
           <Route path='/music' component={Music} />
@@ -45,26 +41,5 @@ const App = (props) => {
     </BrowserRouter>
   );
 }
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.js</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
 
 export default App;
