@@ -18,7 +18,17 @@ let state = {
             {id: 2, text: 'How are you?'},
             {id: 3, text: 'Yo! My friend!'}
         ]
+    },
+}
+
+export const addPost = (postMessage) => {
+    let newPost = {
+        id: state.profilePage.posts.length + 1,
+        text: postMessage,
+        likes: 0
     }
+
+    state.profilePage.posts.push(newPost);
 }
 
 export default state;
