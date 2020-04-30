@@ -23,11 +23,11 @@ const App = (props) => {
         <div className='app-wrapper-content'>
           <Route 
             exact path='/' 
-            render={() => <Profile {...props.profilePage} addPost={props.addPost} />}
+            render={() => <Profile {...props.profilePage} />}
           />
           <Route 
             path='/profile'
-            render={() => <Profile {...props.profilePage} addPost={props.addPost} />}
+            render={() => <Profile {...props.profilePage} />}
           />
           <Route 
             path='/dialogs'

@@ -3,7 +3,16 @@ let state = {
         posts: [
             {id: 1, text: 'Hey! How are you?', likes: 5},
             {id: 2, text: 'It\'s my first post', likes: 20}
-        ]
+        ],
+        addPost: (postMessage, obj) => {
+            let newPost = {
+                id: obj.posts.length + 1,
+                text: postMessage,
+                likes: 0
+            }
+        
+            obj.posts.push(newPost);
+        }
     },
     dialogsPage: {
         dialogs: [
@@ -21,15 +30,15 @@ let state = {
     },
 }
 
-export const addPost = (postMessage) => {
-    let newPost = {
-        id: state.profilePage.posts.length + 1,
-        text: postMessage,
-        likes: 0
-    }
+// export const addPost = (postMessage) => {
+//     let newPost = {
+//         id: state.profilePage.posts.length + 1,
+//         text: postMessage,
+//         likes: 0
+//     }
 
-    state.profilePage.posts.push(newPost);
-}
+//     state.profilePage.posts.push(newPost);
+// }
 
 export default state;
   
