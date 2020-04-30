@@ -13,16 +13,30 @@ import News from './components/News/News';
 import Settings from './components/Settings/Settings';
 import Profile from './components/Profile/Profile';
 
-const App = () => {
+const App = (props) => {
+
+  let posts = props.posts;
+  let dialogs = props.dialogs;
+  let messages = props.messages;
+
   return (
     <BrowserRouter>
       <div className='app-wrapper'>
         <Header />
         <Navbar />
         <div className='app-wrapper-content'>
-          <Route exact path='/' component={Profile} />
-          <Route path='/profile' component={Profile} />
-          <Route path='/dialogs' component={Dialogs} />
+          <Route 
+            exact path='/' 
+            render={(props) => <Profile {...props} posts={posts} />}
+          />
+          <Route 
+            path='/profile'
+            render={(props) => <Profile {...props} posts={posts} />}
+          />
+          <Route 
+            path='/dialogs'
+            render={(props) => <Dialogs {...props} dialogs={dialogs} messages={messages} />}
+          />
           <Route path='/news' component={News} />
           <Route path='/music' component={Music} />
           <Route path='/settings' component={Settings} />
