@@ -1,3 +1,5 @@
+import { rerenderEntireTree } from "../render";
+
 let state = {
     profilePage: {
         posts: [
@@ -12,6 +14,7 @@ let state = {
             }
         
             obj.posts.push(newPost);
+            rerenderEntireTree(state);
         }
     },
     dialogsPage: {
