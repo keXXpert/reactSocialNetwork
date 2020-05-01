@@ -6,6 +6,7 @@ let state = {
             {id: 1, text: 'Hey! How are you?', likes: 5},
             {id: 2, text: 'It\'s my first post', likes: 20}
         ],
+        newPostText: '',
         addPost: (postMessage, obj) => {
             let newPost = {
                 id: obj.posts.length + 1,
@@ -14,6 +15,10 @@ let state = {
             }
         
             obj.posts.push(newPost);
+            rerenderEntireTree(state);
+        },
+        updateNewPostText: (text) => {
+            state.profilePage.newPostText = text;
             rerenderEntireTree(state);
         }
     },
