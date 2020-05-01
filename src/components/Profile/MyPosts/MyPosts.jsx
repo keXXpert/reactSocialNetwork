@@ -3,7 +3,8 @@ import myCSS from './MyPosts.module.css';
 import Post from './Post/Post';
 
 const MyPosts = (props) => {
-    let postsElements = props.posts.map ( post => <Post message={post.text} likes={post.likes} />)
+    debugger;
+    let postsElements = props.profilePage.posts.map ( post => <Post message={post.text} likes={post.likes} />)
     
     let newPostElement = React.createRef();
     
@@ -12,10 +13,8 @@ const MyPosts = (props) => {
         props.updateNewPostText(text);
     }
 
-    let addPostN = () => { 
-        let text  = newPostElement.current.value;
-        props.addPost(text, props);
-        props.updateNewPostText('');
+    let addNewPost = () => { 
+        props.addPost(props);
     }
 
     return (
@@ -24,10 +23,10 @@ const MyPosts = (props) => {
             <div>
             New Post
                 <div>
-                    <textarea ref={newPostElement} value={props.newPostText} onChange={newPostChange}></textarea>
+                    <textarea ref={newPostElement} value={props.profilePage.newPostText} onChange={newPostChange}></textarea>
                 </div>
                 <div>
-                    <button onClick={addPostN}>Add post</button>
+                    <button onClick={addNewPost}>Add post</button>
                 </div>
             </div>
             <div className={myCSS.posts}>
