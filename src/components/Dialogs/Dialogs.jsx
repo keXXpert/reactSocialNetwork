@@ -12,13 +12,15 @@ const Dialogs = (props) => {
     
     const newMessageUpdate = () => {
         let text = newMessageElement.current.value;
-        props.updateNewMessageText(text);
+        let action = {
+            type: 'UPDATE-NEW-MESSAGE-TEXT',
+            text: text
+        }
+        props.dispatch(action);
     }
      
     const sendMessage = () => {
-        // let text = newMessageElement.current.value;
-        // alert(text);
-        props.sendMessage(props);
+        props.dispatch({type: 'SEND-MESSAGE'});
     }
 
     return (
