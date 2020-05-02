@@ -14,7 +14,6 @@ import Settings from './components/Settings/Settings';
 import Profile from './components/Profile/Profile';
 
 const App = (props) => {
-
   return (
     <BrowserRouter>
       <div className='app-wrapper'>
