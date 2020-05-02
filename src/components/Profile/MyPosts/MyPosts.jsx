@@ -3,7 +3,6 @@ import myCSS from './MyPosts.module.css';
 import Post from './Post/Post';
 
 const MyPosts = (props) => {
-    debugger;
     let postsElements = props.profilePage.posts.map ( post => <Post message={post.text} likes={post.likes} />)
    
     let newPostChange = (e) => {
