@@ -7,7 +7,7 @@ import './App.css';
 // My components
 import Header from './components/Header/Header';
 import Navbar from './components/Navbar/Navbar';
-import Dialogs from './components/Dialogs/Dialogs';
+import DialogsContainer from './components/Dialogs/DialogsContainer';
 import Music from './components/Music/Music';
 import News from './components/News/News';
 import Settings from './components/Settings/Settings';
@@ -30,7 +30,7 @@ const App = (props) => {
           />
           <Route 
             path='/dialogs'
-            render={() => <Dialogs dialogsPage={props.state.dialogsPage} dispatch={props.dispatch} />}
+            render={() => <DialogsContainer dialogsPage={props.state.dialogsPage} dispatch={props.dispatch} />}
           />
           <Route path='/news' component={News} />
           <Route path='/music' component={Music} />

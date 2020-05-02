@@ -3,19 +3,23 @@ import myCSS from './MyPosts.module.css';
 import Post from './Post/Post';
 
 const MyPosts = (props) => {
-    let postsElements = props.profilePage.posts.map ( post => <Post message={post.text} likes={post.likes} />)
+    let postsElements = props.posts.map ( post => <Post message={post.text} likes={post.likes} />)
    
-    let newPostChange = (e) => {
+    let onPostChange = (e) => {
         let text = e.target.value;
-        let action = {
-            type: 'UPDATE-NEW-POST-TEXT',
-            text: text
-        }
-        props.dispatch(action);
+
+        props.updateNewPostText(text);
+
+        // let action = {
+        //     type: 'UPDATE-NEW-POST-TEXT',
+        //     text: text
+        // }
+        // props.dispatch(action);
     }
 
-    let addNewPost = () => { 
-        props.dispatch({type: 'ADD-POST'});
+    let onAddPost = () => { 
+        props.addNewPost();
+        // props.dispatch({type: 'ADD-POST'});
     }
 
     return (
@@ -24,10 +28,10 @@ const MyPosts = (props) => {
             <div>
             New Post
                 <div>
-                    <textarea value={props.profilePage.newPostText} onChange={newPostChange}></textarea>
+                    <textarea value={props.newPostText} onChange={onPostChange}></textarea>
                 </div>
                 <div>
-                    <button onClick={addNewPost}>Add post</button>
+                    <button onClick={onAddPost}>Add post</button>
                 </div>
             </div>
             <div className={myCSS.posts}>
