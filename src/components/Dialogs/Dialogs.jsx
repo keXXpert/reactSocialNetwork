@@ -11,16 +11,10 @@ const Dialogs = (props) => {
     const newMessageUpdate = (e) => {
         let text = e.target.value;
         props.newMessageUpdate(text);
-        // let action = {
-        //     type: 'UPDATE-NEW-MESSAGE-TEXT',
-        //     text: text
-        // }
-        // props.dispatch(action);
     }
      
     const sendMessage = () => {
         props.sendMessage();
-        // props.dispatch({type: 'SEND-MESSAGE'});
     }
 
     return (
