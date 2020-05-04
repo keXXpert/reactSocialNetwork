@@ -6,8 +6,6 @@ const MyPosts = (props) => {
     let postsElements = props.profilePage.posts.map ( post => <Post message={post.text} likes={post.likes} />)
    
     let onPostChange = (e) => {
-        debugger;
-
         let text = e.target.value;
 
         props.updateNewPostText(text);
