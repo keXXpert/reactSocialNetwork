@@ -1,8 +1,12 @@
 import React from 'react';
+import UserItem from './UserItem/UserItem';
 
 const UsersSearch = (props) => {
-
-    return (<div>USERS WILL BE HERE</div> )
+    return (
+        <main>
+            {props.users.map( el => (<UserItem {...el} followUser={props.followUser} />))}
+        </main>
+    )
 }
 
 export default UsersSearch;

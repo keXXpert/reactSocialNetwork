@@ -10,7 +10,7 @@ import Music from './components/Music/Music';
 import News from './components/News/News';
 import Settings from './components/Settings/Settings';
 import Profile from './components/Profile/Profile';
-import UsersSearch from './components/UsersSearch/UsersSearch';
+import UsersSearchContainer from './components/UsersSearch/UsersSearchContainer';
 
 const App = (props) => {
   return (
@@ -35,7 +35,7 @@ const App = (props) => {
           <Route path='/music' component={Music} />
           <Route 
             path='/users'
-            render={() => <UsersSearch />} 
+            render={() => <UsersSearchContainer />} 
           />
           <Route path='/settings' component={Settings} />
         </div>
