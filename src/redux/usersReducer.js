@@ -1,42 +1,35 @@
-const SEND_MESSAGE = 'SEND-MESSAGE';
-const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT';
+const FOLLOW = 'FOLLOW';
+const SET_USERS = 'SET-USERS';
 
 let initialState = {
-    dialogs: [
-        {id: 1, name: 'Alex'},
-        {id: 2, name: 'Matt'},
-        {id: 3, name: 'Erica'},
-        {id: 4, name: 'Beck'},
-        {id: 5, name: 'Kate'}
+    users: [
+        { id: 1, photoURL: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Dmitry_Nagiev_2017_4.jpg/274px-Dmitry_Nagiev_2017_4.jpg', followed: true, fullName: 'Dmitry K.', status: 'I\'m a boss', location: { city: 'Minsk', country: 'Belarus' } },
+        { id: 2, photoURL: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Dmitry_Nagiev_2017_4.jpg/274px-Dmitry_Nagiev_2017_4.jpg', followed: false, fullName: 'Alex L.', status: 'I\'m a boss too', location: { city: 'Moscow', country: 'Russia' } },
+        { id: 3, photoURL: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Dmitry_Nagiev_2017_4.jpg/274px-Dmitry_Nagiev_2017_4.jpg', followed: true, fullName: 'Andrew M.', status: 'I\'m a super boss', location: { city: 'Kiev', country: 'Ukraine' } }
     ],
-    messages: [
-        {id: 1, text: 'Hey!'},
-        {id: 2, text: 'How are you?'},
-        {id: 3, text: 'Yo! My friend!'}
-    ],
-    newMessageText: ''
+    usersOnPage: 4
 }
 
-const dialogsReducer = (state = initialState, action) => {
+
+const searchUsersReducer = (state = initialState, action) => {
     switch (action.type) {
-        case SEND_MESSAGE:
-            let newMessage = {
-                id: state.messages.length + 1,
-                text: state.newMessageText
-            }
+        case FOLLOW: {
             return {
                 ...state,
-                messages: [...state.messages, newMessage],
-                newMessageText: ''
+                users: state.users.map(u => {
+                    if (u.id === action.userId) {
+                        return { ...u, followed: !u.followed };
+                    }
+                    return u;
+                })
             }
-        case UPDATE_NEW_MESSAGE_TEXT:
-            return {
-                ...state,
-                newMessageText: action.text
-            };
+        }
+        case SET_USERS: {
+            return {...state.users, users: [...state.users, ...action.users]}
+        }
         default:
             return state;
     }
 }
 
-export default dialogsReducer;
+export default searchUsersReducer;
