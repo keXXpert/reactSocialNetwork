@@ -10,6 +10,7 @@ import Music from './components/Music/Music';
 import News from './components/News/News';
 import Settings from './components/Settings/Settings';
 import Profile from './components/Profile/Profile';
+import UsersSearch from './components/UsersSearch/UsersSearch';
 
 const App = (props) => {
   return (
@@ -32,6 +33,10 @@ const App = (props) => {
           />
           <Route path='/news' component={News} />
           <Route path='/music' component={Music} />
+          <Route 
+            path='/users'
+            render={() => <UsersSearch />} 
+          />
           <Route path='/settings' component={Settings} />
         </div>
       </div>
