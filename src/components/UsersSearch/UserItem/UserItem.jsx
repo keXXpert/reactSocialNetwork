@@ -9,7 +9,7 @@ const UserItem = (props) => {
                     <img src={props.photoURL} className={myCSS.avatar}/>
                 </div>
                 <div>
-                    <button onClick={props.followUser(props.id)}>{props.followed ? 'Follow': 'Unfollow'} </button>
+                    <button onClick={() => {props.followUser(props.id)}}>{props.followed ? 'Follow': 'Unfollow'} </button>
                 </div>
             </span>
             <span>
