@@ -9,17 +9,10 @@ const MyPosts = (props) => {
         let text = e.target.value;
 
         props.updateNewPostText(text);
-
-        // let action = {
-        //     type: 'UPDATE-NEW-POST-TEXT',
-        //     text: text
-        // }
-        // props.dispatch(action);
     }
 
     let onAddPost = () => { 
         props.addNewPost();
-        // props.dispatch({type: 'ADD-POST'});
     }
 
     return (
