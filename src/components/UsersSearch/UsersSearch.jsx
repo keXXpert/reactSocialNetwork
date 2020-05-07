@@ -3,7 +3,12 @@ import UserItem from './UserItem/UserItem';
 import * as axios from 'axios';
 
 class UsersSearch extends React.Component {
-    getUsers = () => {
+    // constructor (props) {
+    //     super (props);
+
+    // }
+    componentDidMount () {
+        alert('new');
         if (this.props.users.length === 0) {
             axios
                 .get('https://social-network.samuraijs.com/api/1.0/users')
@@ -13,7 +18,6 @@ class UsersSearch extends React.Component {
 
     render() {
         return (<main>
-            <button onClick={this.getUsers}>Get Users</button>
             {this.props.users.map(el => (<UserItem {...el} followUser={this.props.followUser} />))}
         </main>
         )
