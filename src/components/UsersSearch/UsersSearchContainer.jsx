@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import UsersSearch from './UsersSearch';
+import UsersSearchAPI from './UsersSearchAPI';
 
 let mapStateToProps = (state) => {
     return {
@@ -20,6 +20,7 @@ let mapDispatchToProps = (dispatch) => {
             dispatch(action);
         },
         setUsers: (users) => {
+            debugger;
             let action = {
                 type: 'SET-USERS',
                 users: users
@@ -43,6 +44,6 @@ let mapDispatchToProps = (dispatch) => {
     }
 }
 
-const UsersSearchContainer = connect(mapStateToProps, mapDispatchToProps)(UsersSearch);
+const UsersSearchContainer = connect(mapStateToProps, mapDispatchToProps)(UsersSearchAPI);
 
 export default UsersSearchContainer;
