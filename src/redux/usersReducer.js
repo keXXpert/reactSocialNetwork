@@ -2,6 +2,7 @@ const FOLLOW = 'FOLLOW';
 const SET_USERS = 'SET-USERS';
 const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE';
 const SET_TOTAL_USERS_COUNT = 'SET-TOTAL-USERS-COUNT';
+const TOGGLE_FETCHING = 'TOGGLE-FETCHING';
 
 let initialState = {
     users: [
@@ -11,7 +12,8 @@ let initialState = {
     ],
     usersOnPage: 5,
     totalUsersCount: 19,
-    currentPage: 1
+    currentPage: 1,
+    isFetching: false
 }
 
 
@@ -36,6 +38,9 @@ const searchUsersReducer = (state = initialState, action) => {
         }
         case SET_TOTAL_USERS_COUNT: {
             return {...state, totalUsersCount: action.totalUsersCount}
+        }
+        case TOGGLE_FETCHING: {
+            return {...state, isFetching: action.isFetching}
         }
         default:
             return state;

@@ -4,6 +4,7 @@ import myCSS from './UsersSearch.module.css'
 
 const UsersSearch = (props) => {
     let pagesCount = Math.ceil(props.totalUsersCount / props.usersOnPage);
+    if (pagesCount > 10) {pagesCount = 10};
 
     let pages = [];
     for (let index = 1; index <= pagesCount; index++) {
