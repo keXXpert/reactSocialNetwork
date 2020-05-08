@@ -1,5 +1,43 @@
 import { connect } from 'react-redux';
-import UsersSearchAPI from './UsersSearchAPI';
+import UsersSearch from './UsersSearch';
+import React from 'react';
+import * as axios from 'axios';
+
+// import UsersSearchAPI from './UsersSearchAPI';
+
+class UsersSearchAPI extends React.Component {
+    componentDidMount () {
+        if (this.props.users.length === 0) {
+            axios
+                .get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.usersOnPage}`)
+                .then(response => {
+                    this.props.setUsers(response.data.items);
+                    this.props.setTotalUsersCount(response.data.totalCount);
+                });
+        }
+    }
+
+    onPageClick = (pageNumber) => {
+        this.props.setCurrentPage(pageNumber);
+        axios
+                .get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.usersOnPage}`)
+                .then(response => {
+                    this.props.setUsers(response.data.items);
+                });
+    }
+
+    render() {
+        
+        return <UsersSearch 
+            users = {this.props.users} 
+            totalUsersCount = {this.props.totalUsersCount}
+            currentPage = {this.props.currentPage}
+            usersOnPage={this.props.usersOnPage}
+            followUser={this.props.followUser}
+            onPageClick={this.onPageClick} />
+    }
+}
+
 
 let mapStateToProps = (state) => {
     return {
@@ -20,7 +58,6 @@ let mapDispatchToProps = (dispatch) => {
             dispatch(action);
         },
         setUsers: (users) => {
-            debugger;
             let action = {
                 type: 'SET-USERS',
                 users: users
