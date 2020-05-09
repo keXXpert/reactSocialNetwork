@@ -3,6 +3,7 @@ import UsersSearch from './UsersSearch';
 import React from 'react';
 import * as axios from 'axios';
 import Preloader from '../common/Preloader/Preloader';
+import { followUser, setUsers, setCurrentPage, setTotalUsersCount, toggleIsFetching } from '../../redux/usersReducer';
 
 class UsersSearchContainer extends React.Component {
     componentDidMount() {
@@ -32,7 +33,7 @@ class UsersSearchContainer extends React.Component {
     render() {
 
         return <>
-            {this.props.isFetching ? <Preloader /> : null }
+            {this.props.isFetching ? <Preloader /> : null}
             <UsersSearch
                 users={this.props.users}
                 totalUsersCount={this.props.totalUsersCount}
@@ -56,44 +57,6 @@ let mapStateToProps = (state) => {
     }
 }
 
-let mapDispatchToProps = (dispatch) => {
-    return {
-        followUser: (userId) => {
-            let action = {
-                type: 'FOLLOW',
-                userId: userId
-            }
-            dispatch(action);
-        },
-        setUsers: (users) => {
-            let action = {
-                type: 'SET-USERS',
-                users: users
-            }
-            dispatch(action);
-        },
-        setCurrentPage: (pageNumber) => {
-            let action = {
-                type: 'SET-CURRENT-PAGE',
-                currentPage: pageNumber
-            }
-            dispatch(action);
-        },
-        setTotalUsersCount: (totalCount) => {
-            let action = {
-                type: 'SET-TOTAL-USERS-COUNT',
-                totalUsersCount: totalCount
-            }
-            dispatch(action);
-        },
-        toggleIsFetching: (isFetching) => {
-            let action = {
-                type: 'TOGGLE-FETCHING',
-                isFetching: isFetching
-            }
-            dispatch(action);
-        }
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(UsersSearchContainer);
+export default connect(mapStateToProps,
+    { followUser, setUsers, setCurrentPage, setTotalUsersCount, toggleIsFetching })
+    (UsersSearchContainer);
