@@ -3,7 +3,6 @@ import { Route, BrowserRouter } from 'react-router-dom';
 import './App.css';
 
 // My components
-import Header from './components/Header/Header';
 import Navbar from './components/Navbar/Navbar';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
 import Music from './components/Music/Music';
@@ -11,12 +10,13 @@ import News from './components/News/News';
 import Settings from './components/Settings/Settings';
 import UsersSearchContainer from './components/UsersSearch/UsersSearchContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
+import HeaderContainer from './components/Header/HeaderContainer';
 
 const App = (props) => {
   return (
     <BrowserRouter>
       <div className='app-wrapper'>
-        <Header />
+        <HeaderContainer />
         <Navbar />
         <div className='app-wrapper-content'>
           <Route 
