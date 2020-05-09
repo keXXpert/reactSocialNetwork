@@ -12,9 +12,7 @@ class UsersSearchContainer extends React.Component {
             axios
                 .get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.usersOnPage}`)
                 .then(response => {
-                    debugger;
                     this.props.toggleIsFetching(false);
-                    debugger;
                     this.props.setUsers(response.data.items);
                     this.props.setTotalUsersCount(response.data.totalCount);
                 });

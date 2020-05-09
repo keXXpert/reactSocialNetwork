@@ -9,8 +9,8 @@ import DialogsContainer from './components/Dialogs/DialogsContainer';
 import Music from './components/Music/Music';
 import News from './components/News/News';
 import Settings from './components/Settings/Settings';
-import Profile from './components/Profile/Profile';
 import UsersSearchContainer from './components/UsersSearch/UsersSearchContainer';
+import ProfileContainer from './components/Profile/ProfileContainer';
 
 const App = (props) => {
   return (
@@ -21,11 +21,11 @@ const App = (props) => {
         <div className='app-wrapper-content'>
           <Route 
             exact path='/' 
-            render={() => <Profile />}
+            render={() => <ProfileContainer />}
           />
           <Route 
             path='/profile'
-            render={() => <Profile />} 
+            render={() => <ProfileContainer />} 
           />
           <Route 
             path='/dialogs'
