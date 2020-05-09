@@ -10,7 +10,6 @@ const UsersSearch = (props) => {
     for (let index = 1; index <= pagesCount; index++) {
         pages.push(index);
     }
-    
     return (
         <main>
             <div>

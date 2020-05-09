@@ -43,10 +43,10 @@ const searchUsersReducer = (state = initialState, action) => {
     }
 }
 
-export const followUser = (userId) => ({type: FOLLOW}, userId);
-export const setUsers = (users) => ({type: SET_USERS}, users);
-export const setCurrentPage = (pageNumber) => ({type: SET_CURRENT_PAGE}, pageNumber);
-export const setTotalUsersCount = (totalCount) => ({type: SET_TOTAL_USERS_COUNT}, totalCount);
-export const toggleIsFetching = (isFetching) => ({type: TOGGLE_FETCHING}, isFetching);
+export const followUser = (userId) => ({type: FOLLOW, userId});
+export const setUsers = (users) => ({type: SET_USERS, users});
+export const setCurrentPage = (currentPage) => ({type: SET_CURRENT_PAGE, currentPage});
+export const setTotalUsersCount = (totalUsersCount) => ({type: SET_TOTAL_USERS_COUNT, totalUsersCount});
+export const toggleIsFetching = (isFetching) => ({type: TOGGLE_FETCHING, isFetching});
 
 export default searchUsersReducer;
