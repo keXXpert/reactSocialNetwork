@@ -1,7 +1,26 @@
-img {
+.headerImage {
     width: 100%;
+}
+
+.profileWrapper {
+    display: grid;
+    grid-template-columns: 6fr 3fr;
+    color: darkslategrey;
+
 }
 
 .bioBlock {
     padding: 10px;
+    text-align: center;
+}
+.profileBlock {
+    padding: 10px;
+}
+
+.textValue {
+    color:  black;
+}
+
+.profilePhoto img{
+    border-radius: 30px;
 }
