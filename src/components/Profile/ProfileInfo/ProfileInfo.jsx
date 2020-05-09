@@ -3,19 +3,30 @@ import myCSS from './ProfileInfo.module.css';
 import Preloader from '../../common/Preloader/Preloader';
 
 const ProfileInfo = (props) => {
-    debugger;
     if (!props.profile) {
         return <Preloader />
     }
     return (
         <div>
             <div>
-                <img src='https://p.bigstockphoto.com/GeFvQkBbSLaMdpKXF1Zv_bigstock-Aerial-View-Of-Blue-Lakes-And--227291596.jpg'></img>
+                <img src='https://p.bigstockphoto.com/GeFvQkBbSLaMdpKXF1Zv_bigstock-Aerial-View-Of-Blue-Lakes-And--227291596.jpg' className={myCSS.headerImage}></img>
             </div>
-            <div className={myCSS.bioBlock}>
-                <img src={props.profile.photos.large} />
-                avatar + description
+            <div className={myCSS.profileWrapper}>
+                <div className={myCSS.profileBlock}>
+                    <p>Name: <span className={myCSS.textValue}>{props.profile.fullName}</span></p>
+                    <p>Looking for a job? <span className={myCSS.textValue}>{props.profile.lookingForAJob ? 'Yes' : 'No'}</span></p>
+                    <p>Job title: <span className={myCSS.textValue}>{props.profile.lookingForAJobDescription ? props.profile.lookingForAJobDescription : 'No'}</span></p>
+                    <p></p>
+                    
+                </div>
+                <div className={myCSS.bioBlock}>
+                    <div className={myCSS.profilePhoto}>
+                        <img src={props.profile.photos.large} />
+                    </div>
+                    {props.profile.aboutMe}
+                </div>
             </div>
+
         </div>
     )
 }
