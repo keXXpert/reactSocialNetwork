@@ -45,8 +45,5 @@ let mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps,
-    {
-        followUser, setCurrentPage, getUsers,
-        
-    })
+    { followUser, setCurrentPage, getUsers })
     (UsersSearchContainer);
