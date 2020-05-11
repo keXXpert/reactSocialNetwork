@@ -14,16 +14,16 @@ const UserItem = (props) => {
                     </NavLink>
                 </div>
                 <div>
-                    <button disabled={props.isFollowing} onClick={() => {
+                    <button disabled={props.isFollowing.some( id => id === props.id)} onClick={() => {
                         debugger;
-                        props.toggleIsFollowing(true);
+                        props.toggleIsFollowing(true, props.id);
                         if (props.followed) {
                             followAPI.unFollow(props.id)
                                 .then(response => {
                                     if (response.resultCode === 0) {
                                         props.followUser(props.id);
                                     }
-                                    props.toggleIsFollowing(false);
+                                    props.toggleIsFollowing(false, props.id);
                                 });
                         }
                         else {
@@ -32,7 +32,7 @@ const UserItem = (props) => {
                                     if (response.resultCode === 0) {
                                         props.followUser(props.id);
                                     }
-                                    props.toggleIsFollowing(false);
+                                    props.toggleIsFollowing(false, props.id);
                                 });
                         }
                     }}>{props.followed ? 'Unfollow' : 'Follow'} </button>
