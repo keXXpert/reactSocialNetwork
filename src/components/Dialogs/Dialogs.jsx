@@ -17,6 +17,8 @@ const Dialogs = (props) => {
         props.sendMessage();
     }
 
+    // if (!props.isAuthed) return <Redirect to='/login' />
+
     return (
         <main className={myCSS.dialogs}>
             <div className={myCSS.dialogList}>

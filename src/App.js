@@ -11,6 +11,7 @@ import Settings from './components/Settings/Settings';
 import UsersSearchContainer from './components/UsersSearch/UsersSearchContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
+import Login from './components/Login/Login';
 
 const App = (props) => {
   return (
@@ -33,6 +34,7 @@ const App = (props) => {
           />
           <Route path='/news' component={News} />
           <Route path='/music' component={Music} />
+          <Route path='/login' component={Login} />
           <Route 
             path='/users'
             render={() => <UsersSearchContainer />} 
