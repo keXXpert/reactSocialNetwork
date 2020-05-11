@@ -2,22 +2,16 @@ import { connect } from 'react-redux';
 import UsersSearch from './UsersSearch';
 import React from 'react';
 import Preloader from '../common/Preloader/Preloader';
-import { followUser, setUsers, setCurrentPage, setTotalUsersCount, toggleIsFetching, toggleIsFollowing, getUsersThunkCreator } from '../../redux/usersReducer';
-import { usersAPI } from '../../api/api';
+import { followUser, setCurrentPage, toggleIsFollowing, getUsers } from '../../redux/usersReducer';
 
 class UsersSearchContainer extends React.Component {
     componentDidMount() {
-            this.props.getUsersThunkCreator(this.props.currentPage, this.props.usersOnPage);
+        this.props.getUsers(this.props.currentPage, this.props.usersOnPage);
     }
 
     onPageClick = (pageNumber) => {
         this.props.setCurrentPage(pageNumber);
-        this.props.toggleIsFetching(true);
-        usersAPI.getUsers(pageNumber, this.props.usersOnPage)
-            .then(response => {
-                this.props.toggleIsFetching(false);
-                this.props.setUsers(response.items);
-            });
+        this.props.getUsers(pageNumber, this.props.usersOnPage);
     }
 
     render() {
@@ -51,7 +45,5 @@ let mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps,
-    { followUser, setUsers, setCurrentPage, 
-      setTotalUsersCount, toggleIsFetching, toggleIsFollowing,
-      getUsersThunkCreator })
+    { followUser, setCurrentPage, toggleIsFollowing, getUsers })
     (UsersSearchContainer);
