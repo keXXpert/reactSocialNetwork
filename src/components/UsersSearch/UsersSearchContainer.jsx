@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import UsersSearch from './UsersSearch';
 import React from 'react';
 import Preloader from '../common/Preloader/Preloader';
-import { followUser, setUsers, setCurrentPage, setTotalUsersCount, toggleIsFetching } from '../../redux/usersReducer';
+import { followUser, setUsers, setCurrentPage, setTotalUsersCount, toggleIsFetching, toggleIsFollowing } from '../../redux/usersReducer';
 import { usersAPI } from '../../api/api';
 
 class UsersSearchContainer extends React.Component {
@@ -40,7 +40,9 @@ class UsersSearchContainer extends React.Component {
                 usersOnPage={this.props.usersOnPage}
                 followUser={this.props.followUser}
                 onPageClick={this.onPageClick}
-                isFetching={this.props.isFetching} />
+                isFetching={this.props.isFetching}
+                isFollowing={this.props.isFollowing}
+                toggleIsFollowing={this.props.toggleIsFollowing} />
         </>
     }
 }
@@ -52,10 +54,11 @@ let mapStateToProps = (state) => {
         usersOnPage: state.usersPage.usersOnPage,
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching
+        isFetching: state.usersPage.isFetching,
+        isFollowing: state.usersPage.isFollowing
     }
 }
 
 export default connect(mapStateToProps,
-    { followUser, setUsers, setCurrentPage, setTotalUsersCount, toggleIsFetching })
+    { followUser, setUsers, setCurrentPage, setTotalUsersCount, toggleIsFetching, toggleIsFollowing })
     (UsersSearchContainer);
