@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import UsersSearch from './UsersSearch';
 import React from 'react';
 import Preloader from '../common/Preloader/Preloader';
-import { followUser, setCurrentPage, toggleIsFollowing, getUsers } from '../../redux/usersReducer';
+import { setCurrentPage, getUsers, followUser } from '../../redux/usersReducer';
 
 class UsersSearchContainer extends React.Component {
     componentDidMount() {
@@ -27,7 +27,7 @@ class UsersSearchContainer extends React.Component {
                 onPageClick={this.onPageClick}
                 isFetching={this.props.isFetching}
                 isFollowing={this.props.isFollowing}
-                toggleIsFollowing={this.props.toggleIsFollowing} />
+            />
         </>
     }
 }
@@ -45,5 +45,8 @@ let mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps,
-    { followUser, setCurrentPage, toggleIsFollowing, getUsers })
+    {
+        followUser, setCurrentPage, getUsers,
+        
+    })
     (UsersSearchContainer);

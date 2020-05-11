@@ -18,7 +18,7 @@ const UsersSearch = (props) => {
                 })}
 
             </div>
-            {props.users.map(el => (<UserItem {...el} followUser={props.followUser} toggleIsFollowing={props.toggleIsFollowing} isFollowing={props.isFollowing} />))}
+            {props.users.map(el => (<UserItem {...el} followUser={props.followUser} isFollowing={props.isFollowing} />))}
         </main>
     )
 }
