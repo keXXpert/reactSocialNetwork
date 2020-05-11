@@ -2,7 +2,6 @@ import React from 'react';
 import myCSS from './UserItem.module.css'
 import userAvatar from './../../../assets/images/ava.png'
 import { NavLink } from 'react-router-dom';
-import { followAPI } from '../../../api/api';
 
 const UserItem = (props) => {
     return (
@@ -15,26 +14,7 @@ const UserItem = (props) => {
                 </div>
                 <div>
                     <button disabled={props.isFollowing.some( id => id === props.id)} onClick={() => {
-                        debugger;
-                        props.toggleIsFollowing(true, props.id);
-                        if (props.followed) {
-                            followAPI.unFollow(props.id)
-                                .then(response => {
-                                    if (response.resultCode === 0) {
-                                        props.followUser(props.id);
-                                    }
-                                    props.toggleIsFollowing(false, props.id);
-                                });
-                        }
-                        else {
-                            followAPI.follow(props.id)
-                                .then(response => {
-                                    if (response.resultCode === 0) {
-                                        props.followUser(props.id);
-                                    }
-                                    props.toggleIsFollowing(false, props.id);
-                                });
-                        }
+                        props.followUser(props.id, props.followed);
                     }}>{props.followed ? 'Unfollow' : 'Follow'} </button>
                 </div>
             </span>

@@ -1,4 +1,4 @@
-import { usersAPI } from '../api/api';
+import { usersAPI, followAPI } from '../api/api';
 
 const FOLLOW = 'FOLLOW';
 const SET_USERS = 'SET-USERS';
@@ -56,7 +56,7 @@ const searchUsersReducer = (state = initialState, action) => {
 }
 
 // action creators
-export const followUser = (userId) => ({ type: FOLLOW, userId });
+export const follow = (userId) => ({ type: FOLLOW, userId });
 export const setUsers = (users) => ({ type: SET_USERS, users });
 export const setCurrentPage = (currentPage) => ({ type: SET_CURRENT_PAGE, currentPage });
 export const setTotalUsersCount = (totalUsersCount) => ({ type: SET_TOTAL_USERS_COUNT, totalUsersCount });
@@ -73,6 +73,31 @@ export const getUsers = (currentPage, usersOnPage) => {
                 dispatch(setUsers(response.items));
                 dispatch(setTotalUsersCount(response.totalCount));
             });
+    }
+}
+
+export const followUser = (userId, followed) => {
+    return (dispatch) => {
+        debugger;
+        dispatch(toggleIsFollowing(true, userId));
+        if (followed) {
+            followAPI.unFollow(userId)
+                .then(response => {
+                    if (response.resultCode === 0) {
+                        dispatch(follow(userId));
+                    }
+                    dispatch(toggleIsFollowing(false, userId));
+                });
+        }
+        else {
+            followAPI.follow(userId)
+                .then(response => {
+                    if (response.resultCode === 0) {
+                        dispatch(follow(userId));
+                    }
+                    dispatch(toggleIsFollowing(false, userId));
+                });
+        }
     }
 }
 
