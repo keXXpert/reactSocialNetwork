@@ -1,14 +1,17 @@
 import React from 'react';
 import myCSS from './Login.module.css';
 import { reduxForm, Field } from 'redux-form';
+import { getLogin, getLogout } from '../../redux/authReducer';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 const LoginForm = (props) => {
     return <form onSubmit={props.handleSubmit}>
         <div>
-            <Field placeholder='Login' name='login' component='input' />
+            <Field placeholder='Login' name='email' component='input' />
         </div>
         <div>
-            <Field placeholder='Password' name='password' component='input' />
+            <Field placeholder='Password' name='password' component='input'type={'password'} />
         </div>
         <div>
             <Field component='input' name='rememberMe' type={'checkbox'} />remember me
@@ -24,8 +27,9 @@ const ReduxLoginForm = reduxForm({ form: 'login' })(LoginForm)
 
 const Login = (props) => {
     const onSubmit = (formData) => {
-        debugger;
+        props.getLogin(formData.email, formData.password, formData.rememberMe);
     }
+    if (props.auth.isAuthed) return <Redirect to="/profile" />
     
     return <div>
         <h3>Login</h3>
@@ -33,4 +37,10 @@ const Login = (props) => {
     </div>
 }
 
-export default Login;
+let mapStateToProps = (state) => {
+    return {
+        auth: state.auth
+    }
+}
+
+export default connect(mapStateToProps, { getLogin, getLogout })(Login);
