@@ -3,7 +3,7 @@ import myCSS from './MyPosts.module.css';
 import Post from './Post/Post';
 import { Field, reduxForm } from 'redux-form';
 import { requiredField, maxLengthCreator } from '../../../untils/validators/validatos';
-import { Textarea } from '../../common/Forms/FormsElems';
+import { CustomTextarea } from '../../common/Forms/FormsElems';
 
 const maxLength50 = maxLengthCreator(50);
 
@@ -11,7 +11,7 @@ const NewPostForm = (props) => {
     return <form onSubmit={props.handleSubmit}>
         <div>
             <Field 
-                component={Textarea} 
+                component={CustomTextarea} 
                 name='newPost' 
                 placeholder='Enter new post...' 
                 validate={[requiredField, maxLength50]} />
@@ -28,6 +28,7 @@ const MyPosts = (props) => {
     let postsElements = props.profilePage.posts.map(post => <Post message={post.text} likes={post.likes} />)
 
     const onSubmit = (formData) => {
+        debugger;
         props.addNewPost(formData.newPost);
     }
 
