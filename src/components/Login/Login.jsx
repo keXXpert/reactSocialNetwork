@@ -18,6 +18,7 @@ const LoginForm = (props) => {
         <div>
             <Field component='input' name='rememberMe' type={'checkbox'} />remember me
         </div>
+        {props.error && <div className={myCSS.globalError}>{props.error}</div>}
         <div>
             <button>Log in</button>
         </div>
