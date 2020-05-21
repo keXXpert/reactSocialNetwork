@@ -3,6 +3,7 @@ import UsersSearch from './UsersSearch';
 import React from 'react';
 import Preloader from '../common/Preloader/Preloader';
 import { setCurrentPage, getUsers, followUser } from '../../redux/usersReducer';
+import { getUsersSel, getUsersOnPageSel, getTotalUsersCountSel, getCurrentPageSel, getIsFetchingSel, getIsFollowingSel } from '../../redux/usersSelectors';
 
 class UsersSearchContainer extends React.Component {
     componentDidMount() {
@@ -32,15 +33,14 @@ class UsersSearchContainer extends React.Component {
     }
 }
 
-
 let mapStateToProps = (state) => {
     return {
-        users: state.usersPage.users,
-        usersOnPage: state.usersPage.usersOnPage,
-        totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-        isFollowing: state.usersPage.isFollowing
+        users: getUsersSel(state),
+        usersOnPage: getUsersOnPageSel(state),
+        totalUsersCount: getTotalUsersCountSel(state),
+        currentPage: getCurrentPageSel(state),
+        isFetching: getIsFetchingSel(state),
+        isFollowing: getIsFollowingSel(state)
     }
 }
 
