@@ -9,7 +9,6 @@ let initialState = {
 const appReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_INITIALIZE:
-        debugger;    
         return { ...state, initialized: true }
         default:
             return state;
@@ -24,7 +23,6 @@ export const initializeApp = () => (dispatch) => {
     // let someyhingElsePromise = dispatch(somethingElse);
     Promise.all([authPromise])
     .then(()=> {
-        debugger;
         dispatch(setInitialize());
     })
 }
