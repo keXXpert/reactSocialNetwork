@@ -4,3 +4,8 @@
 .formElems.error span {
     color: red;
 }
+
+.globalError {
+    color: red;
+    
+}

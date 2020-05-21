@@ -3,8 +3,10 @@ import myCSS from './FormsElems.module.css';
 
 const CustomField = ({ input, meta, children, ...props }) => {
     const hasError = meta.error && meta.touched
-    let newChildren = {...children}
-    newChildren.props= {...newChildren.props, ...input, ...props}
+    let newChildren = {
+        ...children,
+        props: {...children.props, ...input, ...props}
+    }
     return (
         <div className={myCSS.formElems + ' ' + (hasError ? myCSS.error : '')}>
             <div>
