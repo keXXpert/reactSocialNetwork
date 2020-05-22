@@ -1,6 +1,13 @@
-export const getUsersSel = (state) => {
+import { createSelector } from 'reselect'
+
+const getUsersPrimitiveSel = (state) => {
     return state.usersPage.users
 }
+export const getUsersSel = createSelector(getUsersPrimitiveSel, (users) => {
+    // some map, filtering and othe stuff (just an example)
+    return users.filter(u => true)
+})
+
 export const getUsersOnPageSel = (state) => {
     return state.usersPage.usersOnPage
 }
