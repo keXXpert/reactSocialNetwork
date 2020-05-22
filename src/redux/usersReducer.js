@@ -47,7 +47,7 @@ const searchUsersReducer = (state = initialState, action) => {
                 ...state,
                 isFollowing: action.isFollowing
                     ? [...state.isFollowing, action.userId]
-                    : state.isFollowing.filter(id => id != action.userId)
+                    : state.isFollowing.filter(id => id !== action.userId)
             }
         }
         default:
