@@ -7,8 +7,8 @@ import { CustomTextarea } from '../../common/Forms/FormsElems';
 
 const maxLength50 = maxLengthCreator(50);
 
-const NewPostForm = (props) => {
-    return <form onSubmit={props.handleSubmit}>
+const NewPostForm = ({handleSubmit}) => {
+    return <form onSubmit={handleSubmit}>
         <div>
             <Field 
                 component={CustomTextarea} 
@@ -24,15 +24,14 @@ const NewPostForm = (props) => {
 
 const ReduxPostForm = reduxForm({ form: 'newPost' })(NewPostForm)
 
-const MyPosts = (props) => {
-    let postsElements = props.posts.map(post => <Post message={post.text} likes={post.likes} />)
+const MyPosts = ({posts, addNewPost}) => {
+    let postsElements = posts.map(post => <Post message={post.text} likes={post.likes} />)
 
     const onSubmit = (formData) => {
         debugger;
-        props.addNewPost(formData.newPost);
+        addNewPost(formData.newPost);
     }
-    console.log('MyPosts rendered')
-    console.log(props)
+
     return (
         <div className={myCSS.postsBlock}>
             <h3>My Posts</h3>

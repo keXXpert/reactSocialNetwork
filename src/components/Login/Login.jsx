@@ -7,8 +7,8 @@ import { Redirect } from 'react-router-dom';
 import { CustomInput } from '../common/Forms/FormsElems';
 import { requiredField } from '../../untils/validators/validatos';
 
-const LoginForm = (props) => {
-    return <form onSubmit={props.handleSubmit}>
+const LoginForm = ({ handleSubmit, error }) => {
+    return <form onSubmit={handleSubmit}>
         <div>
             <Field placeholder='Login' name='email' component={CustomInput} validate={[requiredField]} />
         </div>
@@ -18,7 +18,7 @@ const LoginForm = (props) => {
         <div>
             <Field component='input' name='rememberMe' type={'checkbox'} />remember me
         </div>
-        {props.error && <div className={myCSS.globalError}>{props.error}</div>}
+        {error && <div className={myCSS.globalError}>{error}</div>}
         <div>
             <button>Log in</button>
         </div>

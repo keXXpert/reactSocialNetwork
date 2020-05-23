@@ -2,8 +2,8 @@ import React from 'react';
 import UserItem from './UserItem/UserItem';
 import myCSS from './UsersSearch.module.css'
 
-const UsersSearch = (props) => {
-    let pagesCount = Math.ceil(props.totalUsersCount / props.usersOnPage);
+const UsersSearch = ({totalUsersCount, usersOnPage, currentPage, users, followUser, isFollowing, onPageClick}) => {
+    let pagesCount = Math.ceil(totalUsersCount / usersOnPage);
     if (pagesCount > 10) {pagesCount = 10};
 
     let pages = [];
@@ -14,11 +14,11 @@ const UsersSearch = (props) => {
         <main>
             <div>
                 {pages.map(p => {
-                    return <span className={props.currentPage === p && myCSS.selectedPage} onClick={() => { props.onPageClick(p) }}>{p} </span>
+                    return <span className={currentPage === p && myCSS.selectedPage} onClick={() => { onPageClick(p) }}>{p} </span>
                 })}
 
             </div>
-            {props.users.map(el => (<UserItem {...el} followUser={props.followUser} isFollowing={props.isFollowing} />))}
+            {users.map(el => (<UserItem {...el} followUser={followUser} isFollowing={isFollowing} />))}
         </main>
     )
 }
