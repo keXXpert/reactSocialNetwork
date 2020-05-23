@@ -3,25 +3,25 @@ import myCSS from './UserItem.module.css'
 import userAvatar from './../../../assets/images/ava.png'
 import { NavLink } from 'react-router-dom';
 
-const UserItem = (props) => {
+const UserItem = ({id, photos, isFollowing, followUser, followed, name, status}) => {
     return (
-        <div key={props.id}>
+        <div key={id}>
             <span>
                 <div>
-                    <NavLink to={'/profile/' + props.id}>
-                        <img src={props.photos.small === null ? userAvatar : props.photos.small} className={myCSS.avatar} alt='User Avatar' />
+                    <NavLink to={'/profile/' + id}>
+                        <img src={photos.small === null ? userAvatar : photos.small} className={myCSS.avatar} alt='User Avatar' />
                     </NavLink>
                 </div>
                 <div>
-                    <button disabled={props.isFollowing.some( id => id === props.id)} onClick={() => {
-                        props.followUser(props.id, props.followed);
-                    }}>{props.followed ? 'Unfollow' : 'Follow'} </button>
+                    <button disabled={isFollowing.some( localId => localId === id)} onClick={() => {
+                        followUser(id, followed);
+                    }}>{followed ? 'Unfollow' : 'Follow'} </button>
                 </div>
             </span>
             <span>
                 <span>
-                    <div>{props.name}</div>
-                    <div>{props.status}</div>
+                    <div>{name}</div>
+                    <div>{status}</div>
                 </span>
             </span>
         </div>

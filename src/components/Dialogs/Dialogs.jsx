@@ -8,9 +8,9 @@ import { maxLengthCreator, requiredField } from '../../untils/validators/validat
 
 const maxLength50 = maxLengthCreator(50);
 
-const AddMessageForm = (props) => {
+const AddMessageForm = ({handleSubmit}) => {
     return (
-        <form onSubmit={props.handleSubmit}>
+        <form onSubmit={handleSubmit}>
             <Field component={CustomTextarea} name='newMessage' placeholder='Enter message...' validate={[requiredField, maxLength50]} />
             <button>Send</button>
         </form>
@@ -19,13 +19,13 @@ const AddMessageForm = (props) => {
 
 const ReduxAddMessageForm = reduxForm({ form: 'newMessage' })(AddMessageForm)
 
-const Dialogs = (props) => {
+const Dialogs = ({sendMessage, dialogsPage: {dialogs, messages}}) => {
 
-    let dialogsElements = props.dialogsPage.dialogs.map(el => (<DialogItem name={el.name} id={el.id} />))
-    let messagesElements = props.dialogsPage.messages.map(el => (<Message message={el.text} />))
+    let dialogsElements = dialogs.map(el => (<DialogItem name={el.name} id={el.id} />))
+    let messagesElements = messages.map(el => (<Message message={el.text} />))
 
     const onSubmit = (formData) => {
-        props.sendMessage(formData.newMessage)
+        sendMessage(formData.newMessage)
     }
 
     // if (!props.isAuthed) return <Redirect to='/login' />

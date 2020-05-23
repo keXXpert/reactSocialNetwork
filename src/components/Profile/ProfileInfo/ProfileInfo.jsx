@@ -3,8 +3,8 @@ import myCSS from './ProfileInfo.module.css';
 import Preloader from '../../common/Preloader/Preloader';
 import ProfileStatus from './ProfileStatus/ProfileStatus';
 
-const ProfileInfo = (props) => {
-    if (!props.profile) {
+const ProfileInfo = ({profile, status, updateUserStatus}) => {
+    if (!profile) {
         return <Preloader />
     }
     return (
@@ -14,18 +14,18 @@ const ProfileInfo = (props) => {
             </div>
             <div className={myCSS.profileWrapper}>
                 <div className={myCSS.profileBlock}>
-                    <p>Name: <span className={myCSS.textValue}>{props.profile.fullName}</span></p>
-                    <p>Looking for a job? <span className={myCSS.textValue}>{props.profile.lookingForAJob ? 'Yes' : 'No'}</span></p>
-                    <p>Job title: <span className={myCSS.textValue}>{props.profile.lookingForAJobDescription ? props.profile.lookingForAJobDescription : 'No'}</span></p>
+                    <p>Name: <span className={myCSS.textValue}>{profile.fullName}</span></p>
+                    <p>Looking for a job? <span className={myCSS.textValue}>{profile.lookingForAJob ? 'Yes' : 'No'}</span></p>
+                    <p>Job title: <span className={myCSS.textValue}>{profile.lookingForAJobDescription ? profile.lookingForAJobDescription : 'No'}</span></p>
                     <p></p>
                     
                 </div>
                 <div className={myCSS.bioBlock}>
                     <div className={myCSS.profilePhoto}>
-                        <img src={props.profile.photos.large} alt='User'/>
+                        <img src={profile.photos.large} alt='User'/>
                     </div>
-                    {props.profile.aboutMe}
-                    <ProfileStatus status={props.status} updateUserStatus={props.updateUserStatus}/>
+                    {profile.aboutMe}
+                    <ProfileStatus status={status} updateUserStatus={updateUserStatus}/>
                 </div>
             </div>
 
