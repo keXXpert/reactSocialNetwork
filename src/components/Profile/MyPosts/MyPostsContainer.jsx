@@ -4,7 +4,7 @@ import { addNewPost } from '../../../redux/profileReducer';
 
 let mapStateToProps = (state) => {
     return {
-        profilePage: state.profilePage
+        posts: state.profilePage.posts
     } 
 }
 
