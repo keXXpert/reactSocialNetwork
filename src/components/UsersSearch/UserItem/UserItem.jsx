@@ -9,7 +9,7 @@ const UserItem = (props) => {
             <span>
                 <div>
                     <NavLink to={'/profile/' + props.id}>
-                        <img src={props.photos.small === null ? userAvatar : props.photos.small} className={myCSS.avatar} />
+                        <img src={props.photos.small === null ? userAvatar : props.photos.small} className={myCSS.avatar} alt='User Avatar' />
                     </NavLink>
                 </div>
                 <div>

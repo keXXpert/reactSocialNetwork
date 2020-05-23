@@ -1,20 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import myCSS from './ProfileStatus.module.css';
 
-const ProfileStatus = (props) => {
+const ProfileStatus = ({status, updateUserStatus}) => {
     let [editMode, setEditMode] = useState(false);
-    let [localStatus, setLocalStatus] = useState(props.status);
+    let [localStatus, setLocalStatus] = useState(status);
     
+    useEffect(() => {
+        setLocalStatus(status)
+    },[status])
+
     const activateEdit = () => {
         setEditMode(true);
     }
     const deactivateEdit = () => {
         setEditMode(false);
-        props.updateUserStatus(localStatus);
+        updateUserStatus(localStatus);
     }
 
     const onStatusChange = (e) => {
-        debugger;
         setLocalStatus(e.currentTarget.value)
     }
 
@@ -22,7 +25,7 @@ const ProfileStatus = (props) => {
         <div>
             {!editMode &&
                 <div>
-                    <span onDoubleClick={() => (activateEdit())}>{!props.status ? 'No Status' : props.status}</span>
+                    <span onDoubleClick={() => (activateEdit())}>{!status ? 'No Status' : status}</span>
                 </div>
             }
             {editMode &&
