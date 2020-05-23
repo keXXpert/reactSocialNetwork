@@ -10,7 +10,7 @@ const ProfileInfo = (props) => {
     return (
         <div>
             <div>
-                <img src='https://p.bigstockphoto.com/GeFvQkBbSLaMdpKXF1Zv_bigstock-Aerial-View-Of-Blue-Lakes-And--227291596.jpg' className={myCSS.headerImage}></img>
+                <img src='https://p.bigstockphoto.com/GeFvQkBbSLaMdpKXF1Zv_bigstock-Aerial-View-Of-Blue-Lakes-And--227291596.jpg' className={myCSS.headerImage} alt=''></img>
             </div>
             <div className={myCSS.profileWrapper}>
                 <div className={myCSS.profileBlock}>
@@ -22,7 +22,7 @@ const ProfileInfo = (props) => {
                 </div>
                 <div className={myCSS.bioBlock}>
                     <div className={myCSS.profilePhoto}>
-                        <img src={props.profile.photos.large} />
+                        <img src={props.profile.photos.large} alt='User'/>
                     </div>
                     {props.profile.aboutMe}
                     <ProfileStatus status={props.status} updateUserStatus={props.updateUserStatus}/>
