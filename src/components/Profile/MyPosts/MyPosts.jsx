@@ -25,13 +25,14 @@ const NewPostForm = (props) => {
 const ReduxPostForm = reduxForm({ form: 'newPost' })(NewPostForm)
 
 const MyPosts = (props) => {
-    let postsElements = props.profilePage.posts.map(post => <Post message={post.text} likes={post.likes} />)
+    let postsElements = props.posts.map(post => <Post message={post.text} likes={post.likes} />)
 
     const onSubmit = (formData) => {
         debugger;
         props.addNewPost(formData.newPost);
     }
-
+    console.log('MyPosts rendered')
+    console.log(props)
     return (
         <div className={myCSS.postsBlock}>
             <h3>My Posts</h3>
