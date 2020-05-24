@@ -73,6 +73,14 @@ export const postUserAvatar = (file) => async (dispatch) => {
     }
 }
 
+export const saveProfile = (profile) => async (dispatch) => {
+    let data = await profileAPI.setProfile(profile)
+    if (data.resultCode === 0) {
+        console.log (data)
+        // dispatch(setPhoto(data.data.photos));
+    }
+}
+
 export const updateUserStatus = (status) => async (dispatch) => {
     let data = await profileAPI.updateStatus(status)
     if (data.resultCode === 0) {
