@@ -6,7 +6,7 @@ import MyPostsContainer from './MyPosts/MyPostsContainer';
 const Profile = (props) => {
     return <main>
         <ProfileInfo {...props} />
-        <MyPostsContainer />
+        {props.isOwner ? <MyPostsContainer />:null}
     </main>
 }
 
