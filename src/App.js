@@ -1,5 +1,8 @@
 import React from 'react';
-import { Route, withRouter } from 'react-router-dom';
+import { Route, withRouter, BrowserRouter } from 'react-router-dom';
+import { compose } from 'redux';
+import { connect, Provider } from 'react-redux';
+import store from './redux/redux-store';
 import './App.css';
 
 // My components
@@ -12,12 +15,10 @@ import UsersSearchContainer from './components/UsersSearch/UsersSearchContainer'
 import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import Login from './components/Login/Login';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
 import { initializeApp } from './redux/appReducer';
 import Preloader from './components/common/Preloader/Preloader';
 
-class App extends React.Component {
+class AppChild extends React.Component {
   componentDidMount() {
     this.props.initializeApp();
   }
@@ -63,6 +64,18 @@ let mapStateToProps = (state) => {
   }
 }
 
-export default compose(
+const AppChildWithWrap = compose(
   withRouter,
-  connect(mapStateToProps, { initializeApp }))(App);
+  connect(mapStateToProps, { initializeApp }))(AppChild);
+
+const App = () => {
+  return (
+    <BrowserRouter>
+    <Provider store={store}>
+      <AppChildWithWrap />
+    </Provider>
+  </BrowserRouter>
+  )
+}
+
+export default App;
