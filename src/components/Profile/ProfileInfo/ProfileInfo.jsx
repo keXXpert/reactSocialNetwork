@@ -4,10 +4,25 @@ import Preloader from '../../common/Preloader/Preloader';
 import ProfileStatus from './ProfileStatus/ProfileStatus';
 import userAvatar from './../../../assets/images/ava.png'
 
-const ProfileInfo = ({ profile, status, updateUserStatus }) => {
+const ProfileInfo = ({ profile, status, updateUserStatus, isOwner, postUserAvatar }) => {
     if (!profile) {
         return <Preloader />
     }
+    let inputElement = null;
+
+    const handleButtonClick = () => {
+        inputElement.click();
+    }
+
+    const onFileSelect = (e) => {
+        if (e.target.files.length) {
+            postUserAvatar(e.target.files[0], profile.userId)
+        }
+        // console.log(e.target.files[0])
+        // console.log(profile)
+    }
+
+
     return (
         <div>
             <div>
@@ -23,13 +38,16 @@ const ProfileInfo = ({ profile, status, updateUserStatus }) => {
                 </div>
                 <div className={myCSS.bioBlock}>
                     <div className={myCSS.profilePhoto}>
-                        <img src={profile.photos.large ? profile.photos.large : userAvatar} alt='' />
-                        <div className={myCSS.middle}>
-                            <div className={myCSS.text}>Upload Photo</div>
-                        </div>
+                        <img src={profile.photos.large || userAvatar} alt='' />
+                        {isOwner &&
+                            <div className={myCSS.middle}>
+                                <input ref={input => inputElement = input} type='file' style={{ display: 'none' }} onChange={onFileSelect} />
+                                <div onClick={() => { handleButtonClick() }} className={myCSS.text}>Upload Photo</div>
+                            </div>
+                        }
                     </div>
                     {profile.aboutMe}
-                    <ProfileStatus status={status} updateUserStatus={updateUserStatus} />
+                    <ProfileStatus status={status} updateUserStatus={updateUserStatus} isOwner={isOwner} />
                 </div>
             </div>
 

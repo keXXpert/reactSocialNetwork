@@ -54,10 +54,10 @@
     cursor: pointer;
 }
 .profilePhoto .text {
-    background-color: #404040;
-    color: white;
+    background-color: #505050;
+    color: #e0e0e0;
     font-size: 14px;
     padding: 10px 20px;
-    border-radius: 10px;
+    border-radius: 3px;
 
 }
