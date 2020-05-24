@@ -1,23 +1,17 @@
 import React from 'react';
 import UserItem from './UserItem/UserItem';
 import myCSS from './UsersSearch.module.css'
+import Paginator from '../common/Paginator/Paginator';
 
 const UsersSearch = ({totalUsersCount, usersOnPage, currentPage, users, followUser, isFollowing, onPageClick}) => {
     let pagesCount = Math.ceil(totalUsersCount / usersOnPage);
-    if (pagesCount > 10) {pagesCount = 10};
+    let pagesToDisplay = 10;
 
-    let pages = [];
-    for (let index = 1; index <= pagesCount; index++) {
-        pages.push(index);
-    }
-    return (
+     return (
         <main>
-            <div>
-                {pages.map(p => {
-                    return <span className={currentPage === p && myCSS.selectedPage} onClick={() => { onPageClick(p) }}>{p} </span>
-                })}
+            <Paginator pagesCount={pagesCount} pagesToDisplay={pagesToDisplay}
+                currentPage={currentPage} onPageClick={onPageClick} />
 
-            </div>
             {users.map(el => (<UserItem {...el} followUser={followUser} isFollowing={isFollowing} />))}
         </main>
     )
