@@ -1,4 +1,5 @@
 import { profileAPI } from "../api/api";
+import { stopSubmit } from 'redux-form';
 
 const ADD_POST = 'profile/ADD-POST';
 const SET_STATUS = 'profile/SET-STATUS';
@@ -77,7 +78,16 @@ export const saveProfile = (profile) => async (dispatch) => {
     let data = await profileAPI.setProfile(profile)
     if (data.resultCode === 0) {
         console.log (data)
-        // dispatch(setPhoto(data.data.photos));
+        dispatch(getUserProfile(profile.userId));
+    } else {
+        let message = data.messages[0];
+        if (message.includes('Contacts')) {
+            let keyz=message.split('->')
+            let field = keyz[1].slice(0,keyz[1].length-1)
+            dispatch(stopSubmit('profile', {'contacts': { field : message } }));
+        } else {
+            dispatch(stopSubmit('profile', { _error: message }));
+        }
     }
 }
 

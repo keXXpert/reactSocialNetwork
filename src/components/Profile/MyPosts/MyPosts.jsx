@@ -25,7 +25,7 @@ const NewPostForm = ({handleSubmit}) => {
 const ReduxPostForm = reduxForm({ form: 'newPost' })(NewPostForm)
 
 const MyPosts = ({posts, addNewPost}) => {
-    let postsElements = posts.map(post => <Post message={post.text} likes={post.likes} />)
+    let postsElements = posts.map(post => <Post key={post.id} message={post.text} likes={post.likes} />)
 
     const onSubmit = (formData) => {
         debugger;
