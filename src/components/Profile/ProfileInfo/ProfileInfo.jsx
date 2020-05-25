@@ -23,10 +23,10 @@ const ProfileInfo = ({ profile, status, updateUserStatus, isOwner, postUserAvata
     }
 
     const onSubmit = (formData) => {
-        debugger;
         formData.userId = profile.userId
-        formData.contacts = {}
         saveProfile(formData)
+        console.log(formData)
+        setEditMode(false)
     }
 
     return (
@@ -36,7 +36,7 @@ const ProfileInfo = ({ profile, status, updateUserStatus, isOwner, postUserAvata
             </div>
             <div className={myCSS.profileWrapper}>
                 {editMode 
-                ? <ProfileBlockForm profile={profile} onSubmit={onSubmit} /> 
+                ? <ProfileBlockForm initialValues={profile} onSubmit={onSubmit} contacts={profile.contacts} /> 
                 : <ProfileBlock profile={profile} isOwner={isOwner} setEditMode={setEditMode} />}
                 <div className={myCSS.bioBlock}>
                     <div className={myCSS.profilePhoto}>
