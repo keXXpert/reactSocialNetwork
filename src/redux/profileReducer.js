@@ -81,11 +81,8 @@ export const saveProfile = (profile) => async (dispatch) => {
     } else {
         let message = data.messages[0];
         if (message.includes('Contacts')) {
-            let keyz=message.split('->')
-            let field = keyz[1].slice(0,keyz[1].length-1).toLowerCase()
-            let errorMessage = {contacts:{}}
-            errorMessage.contacts[field]=message
-            dispatch(stopSubmit('profile', errorMessage));
+            let errorField=message.split('>')[1].slice(0,-1).toLowerCase()
+            dispatch(stopSubmit('profile', {contacts:{[errorField]:message}}));
         } else {
             dispatch(stopSubmit('profile', { _error: message }));
         }
