@@ -7,7 +7,7 @@ import { Redirect } from 'react-router-dom';
 import { CustomInput } from '../common/Forms/FormsElems';
 import { requiredField } from '../../untils/validators/validatos';
 
-const LoginForm = ({ handleSubmit, error }) => {
+const LoginForm = ({ handleSubmit, error, captchaURL }) => {
     return <form onSubmit={handleSubmit}>
         <div>
             <Field placeholder='Login' name='email' component={CustomInput} validate={[requiredField]} />
@@ -18,6 +18,12 @@ const LoginForm = ({ handleSubmit, error }) => {
         <div>
             <Field component='input' name='rememberMe' type={'checkbox'} />remember me
         </div>
+        {captchaURL && <div>
+            <div><img src={captchaURL} /></div>
+            <div>
+                <Field placeholder='Captcha' name='captcha' component={CustomInput} validate={[requiredField]} />
+            </div>
+        </div>}
         {error && <div className={myCSS.globalError}>{error}</div>}
         <div>
             <button>Log in</button>
@@ -28,22 +34,23 @@ const LoginForm = ({ handleSubmit, error }) => {
 
 const ReduxLoginForm = reduxForm({ form: 'login' })(LoginForm)
 
-const Login = (props) => {
+const Login = ({ isAuthed, captchaURL, getLogin }) => {
     const onSubmit = (formData) => {
-        props.getLogin(formData.email, formData.password, formData.rememberMe);
+        getLogin(formData.email, formData.password, formData.rememberMe, formData.captcha);
     }
-    if (props.auth.isAuthed) return <Redirect to="/profile" />
-    
+    if (isAuthed) return <Redirect to="/profile" />
+
     return <div>
         <h3>Login</h3>
-        <ReduxLoginForm onSubmit={onSubmit} />
+        <ReduxLoginForm onSubmit={onSubmit} captchaURL={captchaURL} />
     </div>
 }
 
 let mapStateToProps = (state) => {
     return {
-        auth: state.auth
+        isAuthed: state.auth.isAuthed,
+        captchaURL: state.auth.captchaURL
     }
 }
 
-export default connect(mapStateToProps, { getLogin, getLogout })(Login);
+export default connect(mapStateToProps, { getLogin })(Login);
