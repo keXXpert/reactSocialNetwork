@@ -28,6 +28,8 @@ const ProfileInfo = ({ profile, status, updateUserStatus, isOwner, postUserAvata
             .then(() => {
                 setEditMode(false)
             })
+            // to stop logging error in console
+            .catch(()=>{})
     }
 
     return (
@@ -49,7 +51,6 @@ const ProfileInfo = ({ profile, status, updateUserStatus, isOwner, postUserAvata
                             </div>
                         }
                     </div>
-                    {profile.aboutMe}
                     <ProfileStatus status={status} updateUserStatus={updateUserStatus} isOwner={isOwner} />
 
                 </div>

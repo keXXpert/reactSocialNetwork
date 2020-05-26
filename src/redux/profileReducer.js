@@ -89,7 +89,6 @@ export const saveProfile = (profile) => async (dispatch) => {
         } else {
             dispatch(stopSubmit('profile', { _error: message }));
         }
-        console.log (message)
         return Promise.reject(message)
     }
 }
