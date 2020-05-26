@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import myCSS from './ProfileInfo.module.css';
 import Preloader from '../../common/Preloader/Preloader';
 import ProfileStatus from './ProfileStatus/ProfileStatus';
@@ -7,11 +7,11 @@ import ProfileBlockForm from './ProfileBlockForm/ProfileBlockForm';
 
 const ProfileInfo = ({ profile, status, updateUserStatus, isOwner, postUserAvatar, saveProfile }) => {
     let [editMode, setEditMode] = useState(false);
-    
-    if (!profile) {return <Preloader />}
+
+    if (!profile) { return <Preloader /> }
 
     let inputElement = null;
-    
+
     const handleButtonClick = () => {
         inputElement.click();
     }
@@ -25,8 +25,9 @@ const ProfileInfo = ({ profile, status, updateUserStatus, isOwner, postUserAvata
     const onSubmit = (formData) => {
         formData.userId = profile.userId
         saveProfile(formData)
-        console.log(formData)
-        setEditMode(false)
+            .then(() => {
+                setEditMode(false)
+            })
     }
 
     return (
@@ -35,9 +36,9 @@ const ProfileInfo = ({ profile, status, updateUserStatus, isOwner, postUserAvata
                 <img src='https://p.bigstockphoto.com/GeFvQkBbSLaMdpKXF1Zv_bigstock-Aerial-View-Of-Blue-Lakes-And--227291596.jpg' className={myCSS.headerImage} alt=''></img>
             </div>
             <div className={myCSS.profileWrapper}>
-                {editMode 
-                ? <ProfileBlockForm initialValues={profile} onSubmit={onSubmit} contacts={profile.contacts} /> 
-                : <ProfileBlock profile={profile} isOwner={isOwner} setEditMode={setEditMode} />}
+                {editMode
+                    ? <ProfileBlockForm initialValues={profile} onSubmit={onSubmit} contacts={profile.contacts} />
+                    : <ProfileBlock profile={profile} isOwner={isOwner} setEditMode={setEditMode} />}
                 <div className={myCSS.bioBlock}>
                     <div className={myCSS.profilePhoto}>
                         <img src={profile.photos.large || userAvatar} alt='' />
@@ -50,7 +51,7 @@ const ProfileInfo = ({ profile, status, updateUserStatus, isOwner, postUserAvata
                     </div>
                     {profile.aboutMe}
                     <ProfileStatus status={status} updateUserStatus={updateUserStatus} isOwner={isOwner} />
-                    
+
                 </div>
             </div>
 
@@ -58,20 +59,21 @@ const ProfileInfo = ({ profile, status, updateUserStatus, isOwner, postUserAvata
     )
 }
 
-const ProfileBlock = ({profile: {fullName, aboutMe, lookingForAJob, lookingForAJobDescription, contacts}, isOwner, setEditMode}) => {
+const ProfileBlock = ({ profile: { fullName, aboutMe, lookingForAJob, lookingForAJobDescription, contacts }, isOwner, setEditMode }) => {
     return (
-        
-    <div className={myCSS.profileBlock}>
-        {isOwner && <div><button onClick={()=> setEditMode(true)}>Edit profile</button></div>}
-        <p>Name: <span className={myCSS.textValue}>{fullName}</span></p>
-        <p>About me: <span className={myCSS.textValue}>{aboutMe ? aboutMe : '---'}</span></p>
-        <p>Looking for a job? <span className={myCSS.textValue}>{lookingForAJob ? 'Yes' : 'No'}</span></p>
-        {lookingForAJobDescription && <p>Job title: <span className={myCSS.textValue}>{lookingForAJobDescription ? lookingForAJobDescription : 'No'}</span></p>}
-        <p>Contacts:</p> {Object.keys(contacts).map(key => {
-            return <Contact key={key} contactTitle={key} contactText={contacts[key]} />
-        })}
-    </div>
-)}
+
+        <div className={myCSS.profileBlock}>
+            {isOwner && <div><button onClick={() => setEditMode(true)}>Edit profile</button></div>}
+            <p>Name: <span className={myCSS.textValue}>{fullName}</span></p>
+            <p>About me: <span className={myCSS.textValue}>{aboutMe ? aboutMe : '---'}</span></p>
+            <p>Looking for a job? <span className={myCSS.textValue}>{lookingForAJob ? 'Yes' : 'No'}</span></p>
+            {lookingForAJobDescription && <p>Job title: <span className={myCSS.textValue}>{lookingForAJobDescription ? lookingForAJobDescription : 'No'}</span></p>}
+            <p>Contacts:</p> {Object.keys(contacts).map(key => {
+                return <Contact key={key} contactTitle={key} contactText={contacts[key]} />
+            })}
+        </div>
+    )
+}
 
 
 

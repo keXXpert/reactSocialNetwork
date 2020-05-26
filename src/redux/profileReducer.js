@@ -77,17 +77,20 @@ export const postUserAvatar = (file) => async (dispatch) => {
 export const saveProfile = (profile) => async (dispatch) => {
     let data = await profileAPI.setProfile(profile)
     if (data.resultCode === 0) {
-        console.log (data)
         dispatch(getUserProfile(profile.userId));
     } else {
         let message = data.messages[0];
         if (message.includes('Contacts')) {
             let keyz=message.split('->')
-            let field = keyz[1].slice(0,keyz[1].length-1)
-            dispatch(stopSubmit('profile', {'contacts': { field : message } }));
+            let field = keyz[1].slice(0,keyz[1].length-1).toLowerCase()
+            let errorMessage = {contacts:{}}
+            errorMessage.contacts[field]=message
+            dispatch(stopSubmit('profile', errorMessage));
         } else {
             dispatch(stopSubmit('profile', { _error: message }));
         }
+        console.log (message)
+        return Promise.reject(message)
     }
 }
 
