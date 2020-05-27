@@ -4,6 +4,7 @@ import Preloader from '../../common/Preloader/Preloader';
 import ProfileStatus from './ProfileStatus/ProfileStatus';
 import userAvatar from './../../../assets/images/ava.png'
 import ProfileBlockForm from './ProfileBlockForm/ProfileBlockForm';
+import classNames from 'classnames';
 
 const ProfileInfo = ({ profile, status, updateUserStatus, isOwner, postUserAvatar, saveProfile }) => {
     let [editMode, setEditMode] = useState(false);
@@ -42,7 +43,7 @@ const ProfileInfo = ({ profile, status, updateUserStatus, isOwner, postUserAvata
                     ? <ProfileBlockForm initialValues={profile} onSubmit={onSubmit} contacts={profile.contacts} />
                     : <ProfileBlock profile={profile} isOwner={isOwner} setEditMode={setEditMode} />}
                 <div className={myCSS.bioBlock}>
-                    <div className={myCSS.profilePhoto}>
+                    <div className={classNames(myCSS.profilePhoto, {[myCSS.photoChange]:isOwner})}>
                         <img src={profile.photos.large || userAvatar} alt='' />
                         {isOwner &&
                             <div className={myCSS.middle}>

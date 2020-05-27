@@ -1,7 +1,7 @@
 import React from 'react';
 import myCSS from './Login.module.css';
 import { reduxForm, Field } from 'redux-form';
-import { getLogin, getLogout } from '../../redux/authReducer';
+import { getLogin } from '../../redux/authReducer';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { CustomInput } from '../common/Forms/FormsElems';
@@ -19,7 +19,7 @@ const LoginForm = ({ handleSubmit, error, captchaURL }) => {
             <Field component='input' name='rememberMe' type={'checkbox'} />remember me
         </div>
         {captchaURL && <div>
-            <div><img src={captchaURL} /></div>
+            <div><img src={captchaURL} alt='Captcha' /></div>
             <div>
                 <Field placeholder='Captcha' name='captcha' component={CustomInput} validate={[requiredField]} />
             </div>

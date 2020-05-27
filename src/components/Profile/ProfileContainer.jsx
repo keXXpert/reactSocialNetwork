@@ -6,22 +6,22 @@ import { withRouter, Redirect } from 'react-router-dom';
 import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 import { compose } from 'redux';
 
-const ProfileContainer = (props) => {
+const ProfileContainer = ({match:{params:{userId:propsId}}, authedUserId, getUserProfile, getUserStatus, ...props}) => {
 
-    let userId = props.match.params.userId;
+    let userId = propsId;
     if (!userId) {
-        userId = props.authedUserId
+        userId = authedUserId
     }
 
     useEffect(() => {
-        props.getUserProfile(userId);
-        props.getUserStatus(userId);
-    }, [userId])
+        getUserProfile(userId);
+        getUserStatus(userId);
+    }, [userId, getUserProfile, getUserStatus])
 
 
     if (!props.isAuthed) return <Redirect to='/login' />
 
-    return <Profile isOwner={!props.match.params.userId}profile={props.profile} status={props.status}
+    return <Profile isOwner={!propsId}profile={props.profile} status={props.status}
         updateUserStatus={props.updateUserStatus}
         postUserAvatar={props.postUserAvatar}
         saveProfile={props.saveProfile} />
