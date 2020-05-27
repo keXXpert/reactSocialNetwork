@@ -1,5 +1,5 @@
-import React from 'react';
-import { Route, withRouter, BrowserRouter } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Route, withRouter, BrowserRouter, Switch, Redirect } from 'react-router-dom';
 import { compose } from 'redux';
 import { connect, Provider } from 'react-redux';
 import store from './redux/redux-store';
@@ -18,22 +18,29 @@ import Login from './components/Login/Login';
 import { initializeApp } from './redux/appReducer';
 import Preloader from './components/common/Preloader/Preloader';
 
-class AppChild extends React.Component {
-  componentDidMount() {
-    this.props.initializeApp();
-  }
+// class AppChild extends React.Component {
+//   componentDidMount() {
+//     this.props.initializeApp();
+//   }
 
-  render() {
-    if (!this.props.initialized) return <Preloader />
-    return (
+//   render() {
 
-      <div className='app-wrapper'>
-        <HeaderContainer />
-        <Navbar />
-        <div className='app-wrapper-content'>
+const AppChild = ({initializeApp, initialized}) => {
+  useEffect(() => {
+    initializeApp();
+  }, [])
+
+  if (!initialized) return <Preloader />
+  return (
+
+    <div className='app-wrapper'>
+      <HeaderContainer />
+      <Navbar />
+      <div className='app-wrapper-content'>
+        <Switch>
           <Route
             exact path='/'
-            render={() => <ProfileContainer />}
+            render={() => <Redirect to='/profile' />}
           />
           <Route
             path='/profile/:userId?'
@@ -51,12 +58,14 @@ class AppChild extends React.Component {
             render={() => <UsersSearchContainer />}
           />
           <Route path='/settings' component={Settings} />
-        </div>
+          <Route path='*' render={() => <div>ERROR 404. The requested page is not found.</div>} />
+        </Switch>
       </div>
+    </div>
 
-    );
-  }
+  );
 }
+
 
 let mapStateToProps = (state) => {
   return {
@@ -64,17 +73,17 @@ let mapStateToProps = (state) => {
   }
 }
 
-const AppChildWithWrap = compose(
+const AppContainer = compose(
   withRouter,
   connect(mapStateToProps, { initializeApp }))(AppChild);
 
 const App = () => {
   return (
     <BrowserRouter>
-    <Provider store={store}>
-      <AppChildWithWrap />
-    </Provider>
-  </BrowserRouter>
+      <Provider store={store}>
+        <AppContainer />
+      </Provider>
+    </BrowserRouter>
   )
 }
 
