@@ -14,7 +14,9 @@
 
 .app-wrapper-content {
   grid-area: c;
-  background-color: darkgrey;
+  background-color: rgb(235, 235, 235);
+  box-shadow: 2px 2px 4px rgba(0,0,0, 0.3);
+  border-radius: 3px;
 }
 
 /* .App {

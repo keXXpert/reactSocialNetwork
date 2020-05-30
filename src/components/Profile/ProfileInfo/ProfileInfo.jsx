@@ -80,7 +80,12 @@ const ProfileBlock = ({ profile: { fullName, aboutMe, lookingForAJob, lookingFor
 
 
 const Contact = ({ contactTitle, contactText }) => {
-    return (<p className={myCSS.contact}>{contactTitle}:<span className={myCSS.textValue}>{contactText}</span></p>)
+    const imgSrc=require(`./../../../assets/social/${contactTitle}.png`)
+    return (
+        contactText && <a href={contactText}><img src={imgSrc} alt=""/></a>
+        
+    // <p className={myCSS.contact}>{contactTitle}:<span className={myCSS.textValue}>{contactText}</span></p>
+    )
 }
 
 export default ProfileInfo;
