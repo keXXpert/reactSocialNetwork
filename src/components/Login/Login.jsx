@@ -5,7 +5,7 @@ import { getLogin } from '../../redux/authReducer';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { CustomInput } from '../common/Forms/FormsElems';
-import { requiredField } from '../../untils/validators/validatos';
+import { requiredField } from '../../utils/validators/validatos';
 
 const LoginForm = ({ handleSubmit, error, captchaURL }) => {
     return <form onSubmit={handleSubmit}>
