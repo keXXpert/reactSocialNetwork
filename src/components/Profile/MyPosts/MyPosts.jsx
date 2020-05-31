@@ -7,8 +7,13 @@ import { CustomTextarea } from '../../common/Forms/FormsElems';
 
 const maxLength50 = maxLengthCreator(50);
 
-const NewPostForm = ({handleSubmit}) => {
-    return <form onSubmit={handleSubmit}>
+const NewPostForm = ({handleSubmit, reset}) => {
+    const localHandleSubmit = (evt) => {
+        handleSubmit(evt)
+        reset()
+    }
+
+return <form onSubmit={localHandleSubmit}>
         <div>
             <Field 
                 component={CustomTextarea} 
@@ -28,8 +33,7 @@ const MyPosts = ({posts, addNewPost}) => {
     let postsElements = posts.map(post => <Post key={post.id} message={post.text} likes={post.likes} />)
 
     const onSubmit = (formData) => {
-        debugger;
-        addNewPost(formData.newPost);
+        addNewPost(formData.newPost)
     }
 
     return (

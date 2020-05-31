@@ -8,9 +8,13 @@ import { maxLengthCreator, requiredField } from '../../utils/validators/validato
 
 const maxLength50 = maxLengthCreator(50);
 
-const AddMessageForm = ({handleSubmit}) => {
+const AddMessageForm = ({handleSubmit, reset}) => {
+    const localHandleSubmit = (evt) => {
+        handleSubmit(evt)
+        reset()
+    }
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={localHandleSubmit}>
             <Field component={CustomTextarea} name='newMessage' placeholder='Enter message...' validate={[requiredField, maxLength50]} />
             <button>Send</button>
         </form>
@@ -21,8 +25,8 @@ const ReduxAddMessageForm = reduxForm({ form: 'newMessage' })(AddMessageForm)
 
 const Dialogs = ({sendMessage, dialogsPage: {dialogs, messages}}) => {
 
-    let dialogsElements = dialogs.map(el => (<DialogItem name={el.name} id={el.id} />))
-    let messagesElements = messages.map(el => (<Message message={el.text} />))
+    let dialogsElements = dialogs.map(el => (<DialogItem key={el.id} name={el.name} id={el.id} />))
+    let messagesElements = messages.map(el => (<Message key={el.text} message={el.text} />))
 
     const onSubmit = (formData) => {
         sendMessage(formData.newMessage)

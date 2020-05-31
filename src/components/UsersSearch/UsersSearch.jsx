@@ -12,7 +12,7 @@ const UsersSearch = ({totalUsersCount, usersOnPage, currentPage, users, followUs
             <Paginator pagesCount={pagesCount} pagesToDisplay={pagesToDisplay}
                 currentPage={currentPage} onPageClick={onPageClick} />
 
-            {users.map(el => (<UserItem {...el} followUser={followUser} isFollowing={isFollowing} />))}
+            {users.map(el => (<UserItem key={el.id} {...el} followUser={followUser} isFollowing={isFollowing} />))}
         </main>
     )
 }
