@@ -10,6 +10,8 @@
   grid-template-rows: 60px 1fr;
   grid-template-columns: 2fr 10fr;
   gap: 10px;
+  background: #fafafb;
+  box-sizing: border-box;
 }
 
 .app-wrapper-content {

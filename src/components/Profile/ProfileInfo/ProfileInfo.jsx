@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import myCSS from './ProfileInfo.module.css';
-import Preloader from '../../common/Preloader/Preloader';
 import ProfileStatus from './ProfileStatus/ProfileStatus';
 import userAvatar from './../../../assets/images/ava.png'
 import ProfileBlockForm from './ProfileBlockForm/ProfileBlockForm';
 import classNames from 'classnames';
+import CssLoader from '../../common/Preloader/CssLoader';
 
 const ProfileInfo = ({ profile, status, updateUserStatus, isOwner, postUserAvatar, saveProfile }) => {
     let [editMode, setEditMode] = useState(false);
 
-    if (!profile) { return <Preloader /> }
+    if (!profile) { return <CssLoader /> }
 
     let inputElement = null;
 
