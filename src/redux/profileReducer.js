@@ -41,7 +41,7 @@ const profileReducer = (state = initialState, action) => {
         case SET_AVATAR_PROFILE:
             return {
                 ...state,
-                profile: {...state.profile, photos: action.photoURL}
+                profile: { ...state.profile, photos: action.photoURL }
             };
         default:
             return state;
@@ -56,21 +56,26 @@ export const setPhoto = (photoURL) => ({ type: SET_AVATAR_PROFILE, photoURL });
 export const getUserProfile = (userId) => async (dispatch) => {
     let data = await profileAPI.getProfile(userId)
     // if (data.resultCode === 0) {
-        dispatch(setUserProfile(data));
+    dispatch(setUserProfile(data));
     // }
 }
 
 export const getUserStatus = (userId) => async (dispatch) => {
     let data = await profileAPI.getStatus(userId)
     // if (data.resultCode === 0) {
-        dispatch(setUserStatus(data));
+    dispatch(setUserStatus(data));
     // }
 }
 
 export const postUserAvatar = (file) => async (dispatch) => {
-    let data = await profileAPI.setAvatar(file)
-    if (data.resultCode === 0) {
-        dispatch(setPhoto(data.data.photos));
+    try {
+        let data = await profileAPI.setAvatar(file)
+        if (data.resultCode === 0) {
+            dispatch(setPhoto(data.data.photos));
+        }
+    }
+    catch (err) {
+        console.log(err);
     }
 }
 
@@ -81,8 +86,8 @@ export const saveProfile = (profile) => async (dispatch) => {
     } else {
         let message = data.messages[0];
         if (message.includes('Contacts')) {
-            let errorField=message.split('>')[1].slice(0,-1).toLowerCase()
-            dispatch(stopSubmit('profile', {contacts:{[errorField]:message}}));
+            let errorField = message.split('>')[1].slice(0, -1).toLowerCase()
+            dispatch(stopSubmit('profile', { contacts: { [errorField]: message } }));
         } else {
             dispatch(stopSubmit('profile', { _error: message }));
         }
