@@ -30,10 +30,6 @@ const AppChild = ({initializeApp, initialized}) => {
     initializeApp();
   }, [])
 
-  const handleAllErrors = (PromiseRejectionEvent) => {
-    alert('Oops. Some error occured!')
-  }
-
   useEffect(() => {
     window.addEventListener('unhandledrejection', handleAllErrors)
     return () => {
@@ -41,7 +37,10 @@ const AppChild = ({initializeApp, initialized}) => {
     }
   }, [])
 
-  
+  const handleAllErrors = (PromiseRejectionEvent) => {
+    alert('Oops. Some error occured!')
+    console.log(PromiseRejectionEvent)
+  }
 
   if (!initialized) return <Preloader />
   return (
