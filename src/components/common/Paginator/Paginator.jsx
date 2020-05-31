@@ -19,7 +19,9 @@ const Paginator = ({pagesCount, pagesToDisplay, currentPage, onPageClick}) => {
             <div>
                 {(block > 1) ? <><button onClick={() => {setBlock(1)}}>{'|<'}</button><button onClick={() => {setBlock(block - 1)}}>{'<<'}</button> </> : null }
                 {pages.map(p => {
-                    return <span className={currentPage === p && myCSS.selectedPage} onClick={() => { onPageClick(p) }}>{p} </span>
+                    let numberClass = myCSS.paginator
+                    if (currentPage === p) {numberClass = numberClass + ' ' + myCSS.selectedPage}
+                    return <span className={numberClass} onClick={() => { onPageClick(p) }}>{p} </span>
                 })}
                 {(block < blocksCount) ? <><button onClick={() => {setBlock(block +1)}}>{'>>'}</button><button onClick={() => {setBlock(blocksCount)}}>{'>|'}</button></>: null }
             </div>
