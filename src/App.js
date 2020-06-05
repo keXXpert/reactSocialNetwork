@@ -91,7 +91,7 @@ const AppContainer = compose(
 
 const App = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter>  //basename='/social'
       <Provider store={store}>
         <AppContainer />
       </Provider>
