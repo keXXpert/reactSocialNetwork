@@ -18,13 +18,6 @@ import Login from './components/Login/Login';
 import { initializeApp } from './redux/appReducer';
 import Preloader from './components/common/Preloader/Preloader';
 
-// class AppChild extends React.Component {
-//   componentDidMount() {
-//     this.props.initializeApp();
-//   }
-
-//   render() {
-
 const AppChild = ({initializeApp, initialized}) => {
   useEffect(() => {
     initializeApp();
@@ -91,7 +84,7 @@ const AppContainer = compose(
 
 const App = () => {
   return (
-    <BrowserRouter>  //basename='/social'
+    <BrowserRouter>
       <Provider store={store}>
         <AppContainer />
       </Provider>
