@@ -10,6 +10,7 @@ const UsersSearchContainer = ({currentPage, usersOnPage, getUsers,
 
     useEffect(() => {
         getUsers(currentPage, usersOnPage)
+        // eslint-disable-next-line
     }, [currentPage, usersOnPage])
     
     const onPageClick = (pageNumber) => {

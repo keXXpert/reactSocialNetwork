@@ -1,6 +1,6 @@
 import React from 'react';
 import UserItem from './UserItem/UserItem';
-import myCSS from './UsersSearch.module.css'
+// import myCSS from './UsersSearch.module.css'
 import Paginator from '../common/Paginator/Paginator';
 
 const UsersSearch = ({totalUsersCount, usersOnPage, currentPage, users, followUser, isFollowing, onPageClick}) => {

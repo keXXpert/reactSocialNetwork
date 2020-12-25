@@ -28,6 +28,7 @@ import Preloader from './components/common/Preloader/Preloader';
 const AppChild = ({initializeApp, initialized}) => {
   useEffect(() => {
     initializeApp();
+    // eslint-disable-next-line
   }, [])
 
   useEffect(() => {
