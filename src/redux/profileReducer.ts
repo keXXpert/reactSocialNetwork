@@ -1,5 +1,37 @@
 import { profileAPI } from "../api/api";
 import { stopSubmit } from 'redux-form';
+import { ThunkAction } from "redux-thunk";
+import { Action } from "redux";
+import { ProfileType } from "../types/types";
+
+
+// types
+
+export type ProfileInitialState = typeof initialState
+
+type AddPostActionType = {
+    type: typeof ADD_POST
+    newPostText: string
+}
+
+type SetStatusActionType = {
+    type: typeof SET_STATUS
+    status: string
+}
+
+type SetUserProfileActionType = {
+    type: typeof SET_USER_PROFILE
+    profile: ProfileType
+}
+
+type SetAvatarUrlActionType = {
+    type: typeof SET_AVATAR_PROFILE
+    photoURL: string
+}
+
+export type ProfileActionTypes = AddPostActionType | SetStatusActionType | SetUserProfileActionType | SetAvatarUrlActionType
+
+// reducer
 
 const ADD_POST = 'profile/ADD-POST';
 const SET_STATUS = 'profile/SET-STATUS';
@@ -7,7 +39,7 @@ const SET_USER_PROFILE = 'profile/SET-USER-PROFILE';
 const SET_AVATAR_PROFILE = 'profile/SET-AVATAR';
 
 let initialState = {
-    profile: null,
+    profile: null as ProfileType | null,
     posts: [
         { id: 1, text: 'Hey! How are you?', likes: 5 },
         { id: 2, text: 'It\'s my first post', likes: 20 }
@@ -15,7 +47,7 @@ let initialState = {
     status: 'Hello World!'
 }
 
-const profileReducer = (state = initialState, action) => {
+const profileReducer = (state = initialState, action: ProfileActionTypes): ProfileInitialState => {
     switch (action.type) {
         case ADD_POST:
             let newPost = {
@@ -41,33 +73,33 @@ const profileReducer = (state = initialState, action) => {
         case SET_AVATAR_PROFILE:
             return {
                 ...state,
-                profile: { ...state.profile, photos: action.photoURL }
+                profile: { ...state.profile as ProfileType, photos: action.photoURL }
             };
         default:
             return state;
     }
 }
 
-export const setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile });
-export const setUserStatus = (status) => ({ type: SET_STATUS, status });
-export const addNewPost = (newPostText) => ({ type: ADD_POST, newPostText });
-export const setPhoto = (photoURL) => ({ type: SET_AVATAR_PROFILE, photoURL });
+export const setUserProfile = (profile: ProfileType): SetUserProfileActionType => ({ type: SET_USER_PROFILE, profile });
+export const setUserStatus = (status: string): SetStatusActionType => ({ type: SET_STATUS, status });
+export const addNewPost = (newPostText: string): AddPostActionType => ({ type: ADD_POST, newPostText });
+export const setPhoto = (photoURL: string): SetAvatarUrlActionType => ({ type: SET_AVATAR_PROFILE, photoURL });
 
-export const getUserProfile = (userId) => async (dispatch) => {
+export const getUserProfile = (userId: number): ThunkAction<void, ProfileInitialState, unknown, Action<string>> => async (dispatch) => {
     let data = await profileAPI.getProfile(userId)
     // if (data.resultCode === 0) {
     dispatch(setUserProfile(data));
     // }
 }
 
-export const getUserStatus = (userId) => async (dispatch) => {
+export const getUserStatus = (userId: number): ThunkAction<void, ProfileInitialState, unknown, Action<string>> => async (dispatch) => {
     let data = await profileAPI.getStatus(userId)
     // if (data.resultCode === 0) {
     dispatch(setUserStatus(data));
     // }
 }
 
-export const postUserAvatar = (file) => async (dispatch) => {
+export const postUserAvatar = (file: string): ThunkAction<void, ProfileInitialState, unknown, Action<string>> => async (dispatch) => {
     try {
         let data = await profileAPI.setAvatar(file)
         if (data.resultCode === 0) {
@@ -79,7 +111,7 @@ export const postUserAvatar = (file) => async (dispatch) => {
     }
 }
 
-export const saveProfile = (profile) => async (dispatch) => {
+export const saveProfile = (profile: ProfileType): ThunkAction<void, ProfileInitialState, unknown, Action<string>> => async (dispatch) => {
     let data = await profileAPI.setProfile(profile)
     if (data.resultCode === 0) {
         dispatch(getUserProfile(profile.userId));
@@ -95,7 +127,7 @@ export const saveProfile = (profile) => async (dispatch) => {
     }
 }
 
-export const updateUserStatus = (status) => async (dispatch) => {
+export const updateUserStatus = (status: string): ThunkAction<void, ProfileInitialState, unknown, Action<string>> => async (dispatch) => {
     let data = await profileAPI.updateStatus(status)
     if (data.resultCode === 0) {
         dispatch(setUserStatus(status));
