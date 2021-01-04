@@ -1,25 +1,28 @@
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import UsersSearch from './UsersSearch';
 import React, { useEffect } from 'react';
 import { setCurrentPage, getUsers, followUser } from '../../redux/usersReducer';
 import { getUsersSel, getUsersOnPageSel, getTotalUsersCountSel, getCurrentPageSel, getIsFetchingSel, getIsFollowingSel } from '../../redux/usersSelectors';
 import CssLoader from '../common/Preloader/CssLoader';
+import { RootState } from '../../redux/redux-store'
 
-const UsersSearchContainer = ({currentPage, usersOnPage, getUsers, 
+type UsersHOCPropsType = ConnectedProps<typeof connector>
+
+const UsersSearchContainer: React.FC<UsersHOCPropsType> = ({ currentPage, usersOnPage, getUsers,
     setCurrentPage, users, totalUsersCount, followUser, isFetching, isFollowing }) => {
 
     useEffect(() => {
         getUsers(currentPage, usersOnPage)
         // eslint-disable-next-line
     }, [currentPage, usersOnPage])
-    
-    const onPageClick = (pageNumber) => {
+
+    const onPageClick = (pageNumber: number) => {
         setCurrentPage(pageNumber);
         getUsers(pageNumber, usersOnPage);
     }
 
     return <>
-        {isFetching ? <CssLoader /> : null}
+        {isFetching && <CssLoader />}
         <UsersSearch
             users={users}
             totalUsersCount={totalUsersCount}
@@ -27,7 +30,6 @@ const UsersSearchContainer = ({currentPage, usersOnPage, getUsers,
             usersOnPage={usersOnPage}
             followUser={followUser}
             onPageClick={onPageClick}
-            isFetching={isFetching}
             isFollowing={isFollowing}
         />
     </>
@@ -63,7 +65,7 @@ const UsersSearchContainer = ({currentPage, usersOnPage, getUsers,
 //     }
 // }
 
-let mapStateToProps = (state) => {
+let mapStateToProps = (state: RootState) => {
     return {
         users: getUsersSel(state),
         usersOnPage: getUsersOnPageSel(state),
@@ -74,6 +76,7 @@ let mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps,
+const connector = connect(mapStateToProps,
     { followUser, setCurrentPage, getUsers })
-    (UsersSearchContainer);
+
+export default connector(UsersSearchContainer);

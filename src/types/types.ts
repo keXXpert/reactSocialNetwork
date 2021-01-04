@@ -3,7 +3,10 @@ export interface UsersType {
     name: string
     status?: string
     followed: boolean
-    photos: string
+    photos: {
+        small: string
+        large: string
+    }
 }
 
 export interface ContactsType {
