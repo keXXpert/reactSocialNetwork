@@ -1,7 +1,7 @@
 import React from 'react';
 // import myCSS from './Music.module.css';
 
-const Music = (props) => {
+const Music = () => {
     return <main>
         Music
     </main>

@@ -1,13 +1,27 @@
 import React from 'react';
 import myCSS from './Login.module.css';
-import { reduxForm, Field } from 'redux-form';
+import { reduxForm, Field, InjectedFormProps } from 'redux-form';
 import { getLogin } from '../../redux/authReducer';
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { CustomInput } from '../common/Forms/FormsElems';
 import { requiredField } from '../../utils/validators/validatos';
+import { RootState } from '../../redux/redux-store';
 
-const LoginForm = ({ handleSubmit, error, captchaURL }) => {
+interface LoginFormPropType {
+    captchaURL: string | null
+}
+
+type LoginHOCPropsType = ConnectedProps<typeof connector>
+
+interface LoginFormData {
+    email: string
+    password: string
+    rememberMe: boolean
+    captcha: string
+}
+
+const LoginForm: React.FC<LoginFormPropType & InjectedFormProps<LoginFormData, LoginFormPropType>> = ({ handleSubmit, error, captchaURL }) => {
     return <form onSubmit={handleSubmit}>
         <div>
             <Field placeholder='Login' name='email' component={CustomInput} validate={[requiredField]} />
@@ -32,10 +46,10 @@ const LoginForm = ({ handleSubmit, error, captchaURL }) => {
 }
 
 
-const ReduxLoginForm = reduxForm({ form: 'login' })(LoginForm)
+const ReduxLoginForm = reduxForm<LoginFormData, LoginFormPropType>({ form: 'login' })(LoginForm)
 
-const Login = ({ isAuthed, captchaURL, getLogin }) => {
-    const onSubmit = (formData) => {
+const Login: React.FC<LoginHOCPropsType> = ({ isAuthed, captchaURL, getLogin }) => {
+    const onSubmit = (formData: LoginFormData) => {
         getLogin(formData.email, formData.password, formData.rememberMe, formData.captcha);
     }
     if (isAuthed) return <Redirect to="/profile" />
@@ -46,11 +60,13 @@ const Login = ({ isAuthed, captchaURL, getLogin }) => {
     </div>
 }
 
-let mapStateToProps = (state) => {
+let mapStateToProps = (state: RootState) => {
     return {
         isAuthed: state.auth.isAuthed,
         captchaURL: state.auth.captchaURL
     }
 }
 
-export default connect(mapStateToProps, { getLogin })(Login);
+const connector = connect(mapStateToProps, { getLogin })
+
+export default connector(Login);

@@ -1,6 +1,6 @@
 ## React Social Network
 
-Social Network Single Page Application (SPA) on React.js
+Social Network Single Page Application (SPA) on React.js - code sandbox, technology/code demonstrator
 
 The app uses Redux, redux-thunk middleware, axios requests and auth to backend (not made by me), react-router-dom for navigation, uses redux-form validation, selectors and reselect lib for demo, classnames for dynamic classes, css modules, etc.
 
@@ -9,8 +9,11 @@ Intentionally made without class components (using Hooks).
 Build deployed on: https://kexxpert.online/social
 
 For testing please use these credentials:
+
 Login: free@samuraijs.com
+
 Password: free
+
 
 Social Network has the following functionality:
 - Initial app layout
