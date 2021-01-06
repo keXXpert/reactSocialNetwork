@@ -20,13 +20,22 @@ export interface ContactsType {
     mainLink: string
 }
 
-export interface ProfileType {
+export interface RootProfileType {
     userId: number
     lookingForAJob: boolean
     lookingForAJobDescription: string
     fullName: string
     contacts: ContactsType
-    photos: string
+    aboutMe: string
+}
+
+export type PhotosType = {
+    large: string
+    small: string
+}
+
+export interface ProfileType extends RootProfileType {
+    photos: PhotosType
 }
 
 export interface DialogType {

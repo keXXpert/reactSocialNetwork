@@ -25,11 +25,7 @@ type AuthRedirectPropsType = {
 }
 
 const ProfileContainer: React.FC<ProfileHOCPropsType & RouterPropsType & AuthRedirectPropsType> = ({ match: { params: { userId: propsId } }, authedUserId, getUserProfile, getUserStatus, ...props }) => {
-
-    let userId = propsId;
-    if (!userId) {
-        userId = authedUserId as number
-    }
+    const userId = propsId || authedUserId as number
 
     useEffect(() => {
         getUserProfile(userId);

@@ -4,13 +4,13 @@ import ProfileInfo from './ProfileInfo/ProfileInfo';
 import MyPostsContainer from './MyPosts/MyPostsContainer';
 import { ProfileType } from '../../types/types';
 
-type ProfilePropsType = {
+export type ProfilePropsType = {
     isOwner: boolean
     profile: ProfileType
     status: string
     updateUserStatus: (status: string) => void
     postUserAvatar: (url: string) => void
-    saveProfile: (profile: ProfileType) => void
+    saveProfile: (profile: ProfileType) => Promise<any>
 }
 
 const Profile: React.FC<ProfilePropsType> = (props) => {

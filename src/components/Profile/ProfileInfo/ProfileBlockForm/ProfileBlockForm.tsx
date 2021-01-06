@@ -1,10 +1,24 @@
 import React from 'react';
 import myCSS from './ProfileBlockForm.module.css';
-import { Field, reduxForm } from 'redux-form';
+import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 import { CustomInput, CustomTextarea } from '../../../common/Forms/FormsElems';
 import { requiredField } from '../../../../utils/validators/validatos';
+import { ContactsType } from '../../../../types/types';
 
-const ProfileBlockForm = ({ handleSubmit, contacts, error }) => {
+export interface ProfileFormDataType {
+    fullName: string
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    aboutMe: string
+    contacts: ContactsType
+    userId?: number
+}
+
+type PorfileFormPropsType = {
+    contacts: ContactsType
+}
+
+const ProfileBlockForm: React.FC<PorfileFormPropsType & InjectedFormProps<ProfileFormDataType, PorfileFormPropsType>> = ({ handleSubmit, contacts, error }) => {
     return (
         <form onSubmit={handleSubmit}>
             <div><button>Save changes</button></div>
@@ -21,13 +35,13 @@ const ProfileBlockForm = ({ handleSubmit, contacts, error }) => {
             <div>
                 About me: <Field placeholder='About me' name='aboutMe' component={CustomTextarea} validate={[requiredField]} />
             </div>
-            <p>Contacts:</p> {Object.keys(contacts).map(key => {
-                return <div key={key} style={{paddingLeft: '10px'}}>{key}: <Field placeholder={contacts[key]} name={'contacts.'+key} component={CustomInput} /></div>
+            <p>Contacts:</p> {(Object.keys(contacts) as Array<keyof ContactsType>).map((key: keyof ContactsType) => {
+                return <div key={key} style={{ paddingLeft: '10px' }}>{key}: <Field placeholder={contacts[key]} name={'contacts.' + key} component={CustomInput} /></div>
             })}
         </form>
     )
 }
 
-const ProfileFormRedux = reduxForm({form:'profile'})(ProfileBlockForm)
+const ProfileFormRedux = reduxForm<ProfileFormDataType, PorfileFormPropsType>({ form: 'profile' })(ProfileBlockForm)
 
 export default ProfileFormRedux

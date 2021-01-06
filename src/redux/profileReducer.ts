@@ -2,8 +2,7 @@ import { profileAPI } from "../api/api";
 import { stopSubmit } from 'redux-form';
 import { ThunkAction } from "redux-thunk";
 import { Action } from "redux";
-import { ProfileType } from "../types/types";
-
+import { PhotosType, ProfileType, RootProfileType } from "../types/types";
 
 // types
 
@@ -26,7 +25,7 @@ type SetUserProfileActionType = {
 
 type SetAvatarUrlActionType = {
     type: typeof SET_AVATAR_PROFILE
-    photoURL: string
+    photoURL: PhotosType
 }
 
 export type ProfileActionTypes = AddPostActionType | SetStatusActionType | SetUserProfileActionType | SetAvatarUrlActionType
@@ -83,7 +82,7 @@ const profileReducer = (state = initialState, action: ProfileActionTypes): Profi
 export const setUserProfile = (profile: ProfileType): SetUserProfileActionType => ({ type: SET_USER_PROFILE, profile });
 export const setUserStatus = (status: string): SetStatusActionType => ({ type: SET_STATUS, status });
 export const addNewPost = (newPostText: string): AddPostActionType => ({ type: ADD_POST, newPostText });
-export const setPhoto = (photoURL: string): SetAvatarUrlActionType => ({ type: SET_AVATAR_PROFILE, photoURL });
+export const setPhoto = (photoURL: PhotosType): SetAvatarUrlActionType => ({ type: SET_AVATAR_PROFILE, photoURL });
 
 export const getUserProfile = (userId: number): ThunkAction<void, ProfileInitialState, unknown, Action<string>> => async (dispatch) => {
     let data = await profileAPI.getProfile(userId)
@@ -111,7 +110,8 @@ export const postUserAvatar = (file: string): ThunkAction<void, ProfileInitialSt
     }
 }
 
-export const saveProfile = (profile: ProfileType): ThunkAction<void, ProfileInitialState, unknown, Action<string>> => async (dispatch) => {
+// FIXME Promise<any>
+export const saveProfile = (profile: RootProfileType): ThunkAction<Promise<any>, ProfileInitialState, unknown, Action<string>> => async (dispatch) => {
     let data = await profileAPI.setProfile(profile)
     if (data.resultCode === 0) {
         dispatch(getUserProfile(profile.userId));
