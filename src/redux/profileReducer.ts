@@ -84,21 +84,21 @@ export const setUserStatus = (status: string): SetStatusActionType => ({ type: S
 export const addNewPost = (newPostText: string): AddPostActionType => ({ type: ADD_POST, newPostText });
 export const setPhoto = (photoURL: PhotosType): SetAvatarUrlActionType => ({ type: SET_AVATAR_PROFILE, photoURL });
 
-export const getUserProfile = (userId: number): ThunkAction<void, ProfileInitialState, unknown, Action<string>> => async (dispatch) => {
+export const getUserProfile = (userId: number): ThunkAction<Promise<any>, ProfileInitialState, unknown, ProfileActionTypes> => async (dispatch) => {
     let data = await profileAPI.getProfile(userId)
     // if (data.resultCode === 0) {
     dispatch(setUserProfile(data));
     // }
 }
 
-export const getUserStatus = (userId: number): ThunkAction<void, ProfileInitialState, unknown, Action<string>> => async (dispatch) => {
+export const getUserStatus = (userId: number): ThunkAction<Promise<any>, ProfileInitialState, unknown, ProfileActionTypes> => async (dispatch) => {
     let data = await profileAPI.getStatus(userId)
     // if (data.resultCode === 0) {
     dispatch(setUserStatus(data));
     // }
 }
 
-export const postUserAvatar = (file: string): ThunkAction<void, ProfileInitialState, unknown, Action<string>> => async (dispatch) => {
+export const postUserAvatar = (file: string): ThunkAction<Promise<any>, ProfileInitialState, unknown, ProfileActionTypes> => async (dispatch) => {
     try {
         let data = await profileAPI.setAvatar(file)
         if (data.resultCode === 0) {
@@ -127,7 +127,7 @@ export const saveProfile = (profile: RootProfileType): ThunkAction<Promise<any>,
     }
 }
 
-export const updateUserStatus = (status: string): ThunkAction<void, ProfileInitialState, unknown, Action<string>> => async (dispatch) => {
+export const updateUserStatus = (status: string): ThunkAction<Promise<void>, ProfileInitialState, unknown, ProfileActionTypes> => async (dispatch) => {
     let data = await profileAPI.updateStatus(status)
     if (data.resultCode === 0) {
         dispatch(setUserStatus(status));

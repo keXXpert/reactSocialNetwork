@@ -56,17 +56,22 @@ const authReducer = (state = initialState, action: AuthActionsType): AuthInitial
     }
 }
 
+
+// action creators
+
 export const setAuthUserData = (userId: number | null, email: string | null, login: string | null, isAuthed: boolean): SetUserDataType => ({ type: SET_USER_DATA, data: { userId, email, login, isAuthed } });
 export const setCaptchaURL = (url: string | null): SetCapthaURLType => ({ type: SET_CAPTCHA_URL, url });
 
-export const getAuth = (): ThunkAction<void, AuthInitialStateType, unknown, Action<string>> => async (dispatch) => {
+// thunk creators
+
+export const getAuth = (): ThunkAction<Promise<void>, AuthInitialStateType, unknown, AuthActionsType> => async (dispatch) => {
     const response = await authAPI.authMe()
     if (response.resultCode === 0) {
         dispatch(setAuthUserData(response.data.id, response.data.email, response.data.login, true))
     }
 }
 
-export const getLogin = (email: string, password: string, rememberMe: boolean, captcha: string): ThunkAction<void, AuthInitialStateType, unknown, Action<string>> => async (dispatch) => {
+export const getLogin = (email: string, password: string, rememberMe: boolean, captcha: string): ThunkAction<Promise<void>, AuthInitialStateType, unknown, Action<string>> => async (dispatch) => {
     const response = await authAPI.login(email, password, rememberMe, captcha)
     if (response.resultCode === 0) {
         dispatch(getAuth())
@@ -79,13 +84,13 @@ export const getLogin = (email: string, password: string, rememberMe: boolean, c
     }
 }
 
-export const getLogout = (): ThunkAction<void, AuthInitialStateType, unknown, Action<string>> => async (dispatch) => {
+export const getLogout = (): ThunkAction<Promise<void>, AuthInitialStateType, unknown, AuthActionsType> => async (dispatch) => {
     const response = await authAPI.logout()
     if (response.resultCode === 0) {
         dispatch(setAuthUserData(null, null, null, false))
     }
 }
-export const getCaptchaURL = (): ThunkAction<void, AuthInitialStateType, unknown, Action<string>> => async (dispatch) => {
+export const getCaptchaURL = (): ThunkAction<Promise<void>, AuthInitialStateType, unknown, AuthActionsType> => async (dispatch) => {
     const response = await securityAPI.getCaptcha()
     console.log(response.url)
     dispatch(setCaptchaURL(response.url))

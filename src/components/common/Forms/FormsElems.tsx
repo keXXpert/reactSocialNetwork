@@ -19,7 +19,6 @@ const CustomField: React.FC<CustomFieldPropsType> = ({ input, meta, children, ..
         props: { ...children.props, ...input, ...props }
     }
 
-    console.log('Child', children, 'New', newChildren);
     return (
         <div className={myCSS.formElems + ' ' + (hasError ? myCSS.error : '')}>
             <div>
@@ -31,7 +30,6 @@ const CustomField: React.FC<CustomFieldPropsType> = ({ input, meta, children, ..
 }
 
 export const CustomTextarea = (props: any) => {
-    console.log(props);
     return (
         <CustomField {...props}>
             <textarea />

@@ -1,4 +1,3 @@
-import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { usersAPI, followAPI } from '../api/api';
 import { UsersType } from '../types/types';
@@ -104,7 +103,7 @@ export const toggleIsFetching = (isFetching: boolean): ToggleFetchingActionType 
 export const toggleIsFollowing = (isFollowing: boolean, userId: number): ToggleFollowingActionType => ({ type: TOGGLE_FOLLOWING, isFollowing, userId });
 
 //thunk creators
-export const getUsers = (currentPage: number, usersOnPage: number): ThunkAction<void, UsersInitialState, unknown, Action<string>> => async (dispatch) => {
+export const getUsers = (currentPage: number, usersOnPage: number): ThunkAction<Promise<void>, UsersInitialState, unknown, UsersActionTypes> => async (dispatch) => {
     dispatch(toggleIsFetching(true));
     let response = await usersAPI.getUsers(currentPage, usersOnPage);
     dispatch(toggleIsFetching(false));
@@ -112,7 +111,7 @@ export const getUsers = (currentPage: number, usersOnPage: number): ThunkAction<
     dispatch(setTotalUsersCount(response.totalCount));
 }
 
-export const followUser = (userId: number, followed: boolean): ThunkAction<void, UsersInitialState, unknown, Action<string>> => async (dispatch) => {
+export const followUser = (userId: number, followed: boolean): ThunkAction<Promise<void>, UsersInitialState, unknown, UsersActionTypes> => async (dispatch) => {
     dispatch(toggleIsFollowing(true, userId));
     let response;
     if (followed) {

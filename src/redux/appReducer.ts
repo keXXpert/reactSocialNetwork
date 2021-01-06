@@ -1,4 +1,3 @@
-import { Action } from 'redux'
 import { ThunkAction } from 'redux-thunk'
 import { AuthInitialStateType, getAuth } from './authReducer'
 
@@ -33,7 +32,7 @@ const appReducer = (state = initialState, action: AppActionTypes): AppInitialSta
 
 export const setInitialize = (): SetInitializeActionType => ({ type: SET_INITIALIZE });
 
-export const initializeApp = (): ThunkAction<void, AuthInitialStateType, unknown, Action<string>> => (dispatch) => {
+export const initializeApp = (): ThunkAction<void, AuthInitialStateType, unknown, AppActionTypes> => (dispatch) => {
     let authPromise = dispatch(getAuth());
     // let somethingPromise= dispatch(something);
     // let someyhingElsePromise = dispatch(somethingElse);

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { RootProfileType } from '../types/types';
+import { ProfileType, RootProfileType, UsersType } from '../types/types';
 
 const instance = axios.create({
     withCredentials: true,
@@ -9,53 +9,74 @@ const instance = axios.create({
     }
 });
 
+type GetUsersResponseType = {
+    items: Array<UsersType>
+    totalCount: number
+    error?: string | null
+}
+
 export const usersAPI = {
     getUsers(page = 1, usersOnPage = 10) {
         return instance
-            .get(`users?page=${page}&count=${usersOnPage}`)
+            .get<GetUsersResponseType>(`users?page=${page}&count=${usersOnPage}`)
             .then(response => response.data);
     }
+}
+
+type ConfirmResponseType = {
+    resultCode: number
+    messages: Array<string>
+    data: object
 }
 
 export const followAPI = {
     follow(userId: number) {
         return instance
-            .post(`follow/${userId}`)
+            .post<ConfirmResponseType>(`follow/${userId}`)
             .then(response => response.data);
     },
     unFollow(userId: number) {
         return instance
-            .delete(`follow/${userId}`)
+            .delete<ConfirmResponseType>(`follow/${userId}`)
             .then(response => response.data);
+    }
+}
+
+type SetAvatarResonseType = ConfirmResponseType & {
+    data: {
+        photos: {
+            small: string
+            large: string
+        }
     }
 }
 
 export const profileAPI = {
     getProfile(userId = 7835) {
         return instance
-            .get(`profile/` + userId)
+            .get<ProfileType>(`profile/` + userId)
             .then(response => response.data);
     },
     getStatus(userId = 7835) {
         return instance
-            .get(`profile/status/` + userId)
+            .get<string>(`profile/status/` + userId)
             .then(response => response.data);
     },
     updateStatus(status: string) {
         return instance
-            .put(`profile/status`, { status: status })
+            .put<ConfirmResponseType>(`profile/status`, { status: status })
             .then(response => response.data);
     },
     setProfile(profile: RootProfileType) {
         return instance
-            .put(`profile`, profile)
+            .put<ConfirmResponseType>(`profile`, profile)
             .then(response => response.data);
     },
     setAvatar(file: string) {
         let formData = new FormData();
         formData.append('image', file)
         return instance
-            .put(`profile/photo`, formData, {
+            .put<SetAvatarResonseType>(`profile/photo`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -64,20 +85,28 @@ export const profileAPI = {
     }
 }
 
+type AuthMeResponseType = ConfirmResponseType & {
+    data: {
+        id: number
+        email: string
+        login: string
+    }
+}
+
 export const authAPI = {
     authMe() {
         return instance
-            .get(`auth/me`)
+            .get<AuthMeResponseType>(`auth/me`)
             .then(response => response.data);
     },
     login(email: string, password: string, rememberMe: boolean = false, captcha: string | null = null) {
         return instance
-            .post(`auth/login`, { email, password, rememberMe, captcha })
+            .post<ConfirmResponseType>(`auth/login`, { email, password, rememberMe, captcha })
             .then(response => response.data);
     },
     logout() {
         return instance
-            .post(`auth/logout`)
+            .post<ConfirmResponseType>(`auth/logout`)
             .then(response => response.data);
     }
 }
@@ -85,7 +114,7 @@ export const authAPI = {
 export const securityAPI = {
     getCaptcha() {
         return instance
-            .get(`security/get-captcha-url`)
+            .get<{ url: string }>(`security/get-captcha-url`)
             .then(response => response.data);
     }
 
