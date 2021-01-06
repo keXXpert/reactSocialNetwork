@@ -2,14 +2,19 @@ import React from 'react';
 import myCSS from './Dialogs.module.css';
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
-import { Field, reduxForm } from 'redux-form';
+import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 import { CustomTextarea } from '../common/Forms/FormsElems';
 import { maxLengthCreator, requiredField } from '../../utils/validators/validatos';
+import { DialogsHOCPropsType } from './DialogsContainer';
+
+type DialogsFormData = {
+    newMessage: string
+}
 
 const maxLength50 = maxLengthCreator(50);
 
-const AddMessageForm = ({handleSubmit, reset}) => {
-    const localHandleSubmit = (evt) => {
+const AddMessageForm: React.FC<InjectedFormProps<DialogsFormData>> = ({ handleSubmit, reset }) => {
+    const localHandleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
         handleSubmit(evt)
         reset()
     }
@@ -21,27 +26,23 @@ const AddMessageForm = ({handleSubmit, reset}) => {
     )
 }
 
-const ReduxAddMessageForm = reduxForm({ form: 'newMessage' })(AddMessageForm)
+const ReduxAddMessageForm = reduxForm<DialogsFormData>({ form: 'newMessage' })(AddMessageForm)
 
-const Dialogs = ({sendMessage, dialogsPage: {dialogs, messages}}) => {
-
-    let dialogsElements = dialogs.map(el => (<DialogItem key={el.id} name={el.name} id={el.id} />))
-    let messagesElements = messages.map(el => (<Message key={el.text} message={el.text} />))
-
-    const onSubmit = (formData) => {
+const Dialogs: React.FC<DialogsHOCPropsType> = ({ sendMessage, dialogsPage }) => {
+    const onSubmit = (formData: DialogsFormData) => {
         sendMessage(formData.newMessage)
     }
 
-    // if (!props.isAuthed) return <Redirect to='/login' />
+    const { dialogs, messages } = dialogsPage
 
     return (
         <main className={myCSS.dialogs}>
             <div className={myCSS.dialogList}>
-                {dialogsElements}
+                {dialogs.map(el => (<DialogItem key={el.id} name={el.name} id={el.id} />))}
             </div>
             <div className={myCSS.messages}>
-                {messagesElements}
-                <ReduxAddMessageForm onSubmit={onSubmit}/>
+                {messages.map(el => (<Message key={el.text} message={el.text} />))}
+                <ReduxAddMessageForm onSubmit={onSubmit} />
             </div>
         </main>
     )
