@@ -1,12 +1,25 @@
 import React from 'react';
 import myCSS from './FormsElems.module.css';
 
-const CustomField = ({ input, meta: {touched, error}, children, ...props }) => {
-    const hasError = error && touched
-    let newChildren = {
-        ...children,
-        props: {...children.props, ...input, ...props}
+type CustomFieldPropsType = {
+    input: object
+    meta: {
+        touched: boolean
+        error: string
     }
+    children: React.Component
+}
+
+const CustomField: React.FC<CustomFieldPropsType> = ({ input, meta, children, ...props }) => {
+    const { touched, error } = meta
+    const hasError = error && touched
+
+    let newChildren = {
+        ...children as React.Component,
+        props: { ...children.props, ...input, ...props }
+    }
+
+    console.log('Child', children, 'New', newChildren);
     return (
         <div className={myCSS.formElems + ' ' + (hasError ? myCSS.error : '')}>
             <div>
@@ -17,14 +30,15 @@ const CustomField = ({ input, meta: {touched, error}, children, ...props }) => {
     )
 }
 
-export const CustomTextarea = (props) => {
+export const CustomTextarea = (props: any) => {
+    console.log(props);
     return (
         <CustomField {...props}>
             <textarea />
         </CustomField>
     )
 }
-export const CustomInput = (props) => {
+export const CustomInput = (props: any) => {
     return (
         <CustomField {...props}>
             <input />
