@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { Route, withRouter, BrowserRouter, Switch, Redirect } from 'react-router-dom';
 import { compose } from 'redux';
-import { connect, Provider } from 'react-redux';
-import store from './redux/redux-store';
+import { connect, ConnectedProps, Provider } from 'react-redux';
+import store, { RootState } from './redux/redux-store';
 import './App.css';
 
 // My components
@@ -25,7 +25,9 @@ import Preloader from './components/common/Preloader/Preloader';
 
 //   render() {
 
-const AppChild = ({initializeApp, initialized}) => {
+type AppHOCPropsType = ConnectedProps<typeof connector>
+
+const AppChild: React.FC<AppHOCPropsType> = ({ initializeApp, initialized }) => {
   useEffect(() => {
     initializeApp();
     // eslint-disable-next-line
@@ -38,7 +40,7 @@ const AppChild = ({initializeApp, initialized}) => {
     }
   }, [])
 
-  const handleAllErrors = (PromiseRejectionEvent) => {
+  const handleAllErrors = (PromiseRejectionEvent: PromiseRejectionEvent) => {
     alert('Oops. Some error occured!')
     console.log(PromiseRejectionEvent)
   }
@@ -80,15 +82,17 @@ const AppChild = ({initializeApp, initialized}) => {
 }
 
 
-let mapStateToProps = (state) => {
+let mapStateToProps = (state: RootState) => {
   return {
     initialized: state.app.initialized
   }
 }
 
+const connector = connect(mapStateToProps, { initializeApp })
+
 const AppContainer = compose(
   withRouter,
-  connect(mapStateToProps, { initializeApp }))(AppChild);
+  connector)(AppChild) as typeof React.Component;
 
 const App = () => {
   return (

@@ -56,4 +56,4 @@ export default compose(
     connector,
     withRouter,
     withAuthRedirect
-)(ProfileContainer);
+)(ProfileContainer) as typeof React.Component

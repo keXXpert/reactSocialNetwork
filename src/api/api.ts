@@ -1,4 +1,5 @@
-import * as axios from 'axios';
+import axios from 'axios';
+import { RootProfileType } from '../types/types';
 
 const instance = axios.create({
     withCredentials: true,
@@ -17,12 +18,12 @@ export const usersAPI = {
 }
 
 export const followAPI = {
-    follow(userId) {
+    follow(userId: number) {
         return instance
             .post(`follow/${userId}`)
             .then(response => response.data);
     },
-    unFollow(userId) {
+    unFollow(userId: number) {
         return instance
             .delete(`follow/${userId}`)
             .then(response => response.data);
@@ -40,17 +41,17 @@ export const profileAPI = {
             .get(`profile/status/` + userId)
             .then(response => response.data);
     },
-    updateStatus(status) {
+    updateStatus(status: string) {
         return instance
             .put(`profile/status`, { status: status })
             .then(response => response.data);
     },
-    setProfile(profile) {
+    setProfile(profile: RootProfileType) {
         return instance
             .put(`profile`, profile)
             .then(response => response.data);
     },
-    setAvatar(file) {
+    setAvatar(file: string) {
         let formData = new FormData();
         formData.append('image', file)
         return instance
@@ -69,7 +70,7 @@ export const authAPI = {
             .get(`auth/me`)
             .then(response => response.data);
     },
-    login(email, password, rememberMe = false, captcha = null) {
+    login(email: string, password: string, rememberMe: boolean = false, captcha: string | null = null) {
         return instance
             .post(`auth/login`, { email, password, rememberMe, captcha })
             .then(response => response.data);

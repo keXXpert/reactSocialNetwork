@@ -1,3 +1,4 @@
+import React from 'react'
 import Dialogs from './Dialogs';
 import { connect, ConnectedProps } from 'react-redux';
 import { sendMessage } from '../../redux/dialogsReducer';
@@ -16,4 +17,4 @@ export type DialogsHOCPropsType = ConnectedProps<typeof connector>
 export default compose(
     connector,
     withAuthRedirect
-)(Dialogs)
+)(Dialogs) as typeof React.Component
