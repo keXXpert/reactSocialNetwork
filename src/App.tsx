@@ -82,17 +82,13 @@ const AppChild: React.FC<AppHOCPropsType> = ({ initializeApp, initialized }) => 
 }
 
 
-let mapStateToProps = (state: RootState) => {
-  return {
-    initialized: state.app.initialized
-  }
-}
+let mapStateToProps = (state: RootState) => ({
+  initialized: state.app.initialized
+})
 
 const connector = connect(mapStateToProps, { initializeApp })
 
-const AppContainer = compose(
-  withRouter,
-  connector)(AppChild) as typeof React.Component;
+const AppContainer = compose<React.ComponentType>(withRouter, connector)(AppChild)
 
 const App = () => {
   return (

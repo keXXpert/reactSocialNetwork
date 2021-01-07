@@ -1,19 +1,17 @@
 import React from 'react';
-import { WrappedFieldInputProps, WrappedFieldMetaProps } from 'redux-form';
+import { WrappedFieldProps } from 'redux-form';
 import myCSS from './FormsElems.module.css';
 
-type CustomFieldPropsType = {
-    input: WrappedFieldInputProps
-    meta: WrappedFieldMetaProps
-    children: React.Component
+type ChildrenType = {
+    children: JSX.Element
 }
 
-const CustomField: React.FC<CustomFieldPropsType> = ({ input, meta, children, ...props }) => {
+const CustomField: React.FC<WrappedFieldProps & ChildrenType> = ({ input, meta, children, ...props }) => {
     const { touched, error } = meta
     const hasError = error && touched
 
     let newChildren = {
-        ...children as React.Component,
+        ...children as JSX.Element,
         props: { ...children.props, ...input, ...props }
     }
 
@@ -27,14 +25,15 @@ const CustomField: React.FC<CustomFieldPropsType> = ({ input, meta, children, ..
     )
 }
 
-export const CustomTextarea = (props: any) => {
+
+export const CustomTextarea = (props: WrappedFieldProps) => {
     return (
         <CustomField {...props}>
             <textarea />
         </CustomField>
     )
 }
-export const CustomInput = (props: any) => {
+export const CustomInput = (props: WrappedFieldProps) => {
     return (
         <CustomField {...props}>
             <input />
