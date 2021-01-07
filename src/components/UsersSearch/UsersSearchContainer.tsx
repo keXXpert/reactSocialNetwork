@@ -1,7 +1,7 @@
 import { connect, ConnectedProps } from 'react-redux';
 import UsersSearch from './UsersSearch';
 import React, { useEffect } from 'react';
-import { setCurrentPage, getUsers, followUser } from '../../redux/usersReducer';
+import { getUsers, followUser, usersActions } from '../../redux/usersReducer';
 import { getUsersSel, getUsersOnPageSel, getTotalUsersCountSel, getCurrentPageSel, getIsFetchingSel, getIsFollowingSel } from '../../redux/usersSelectors';
 import CssLoader from '../common/Preloader/CssLoader';
 import { RootState } from '../../redux/redux-store'
@@ -77,6 +77,6 @@ let mapStateToProps = (state: RootState) => {
 }
 
 const connector = connect(mapStateToProps,
-    { followUser, setCurrentPage, getUsers })
+    { followUser, setCurrentPage: usersActions.setCurrentPage, getUsers })
 
 export default connector(UsersSearchContainer);

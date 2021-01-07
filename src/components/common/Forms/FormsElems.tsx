@@ -1,12 +1,10 @@
 import React from 'react';
+import { WrappedFieldInputProps, WrappedFieldMetaProps } from 'redux-form';
 import myCSS from './FormsElems.module.css';
 
 type CustomFieldPropsType = {
-    input: object
-    meta: {
-        touched: boolean
-        error: string
-    }
+    input: WrappedFieldInputProps
+    meta: WrappedFieldMetaProps
     children: React.Component
 }
 

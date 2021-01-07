@@ -1,8 +1,7 @@
-import { profileAPI } from "../api/api";
+import { profileAPI } from "../api/endpoints/profile";
 import { stopSubmit } from 'redux-form';
-import { ThunkAction } from "redux-thunk";
-import { Action } from "redux";
 import { PhotosType, ProfileType, RootProfileType } from "../types/types";
+import { BaseThunkType } from "./redux-store";
 
 // types
 
@@ -84,38 +83,36 @@ export const setUserStatus = (status: string): SetStatusActionType => ({ type: S
 export const addNewPost = (newPostText: string): AddPostActionType => ({ type: ADD_POST, newPostText });
 export const setPhoto = (photoURL: PhotosType): SetAvatarUrlActionType => ({ type: SET_AVATAR_PROFILE, photoURL });
 
-export const getUserProfile = (userId: number): ThunkAction<Promise<any>, ProfileInitialState, unknown, ProfileActionTypes> => async (dispatch) => {
+type ThunkType = BaseThunkType<ProfileActionTypes | ReturnType<typeof stopSubmit>>
+
+export const getUserProfile = (userId: number): ThunkType => async (dispatch) => {
     let data = await profileAPI.getProfile(userId)
     // if (data.resultCode === 0) {
     dispatch(setUserProfile(data));
-    // }
+    // } 
 }
 
-export const getUserStatus = (userId: number): ThunkAction<Promise<any>, ProfileInitialState, unknown, ProfileActionTypes> => async (dispatch) => {
+export const getUserStatus = (userId: number): ThunkType => async (dispatch) => {
     let data = await profileAPI.getStatus(userId)
     // if (data.resultCode === 0) {
     dispatch(setUserStatus(data));
     // }
 }
 
-export const postUserAvatar = (file: string): ThunkAction<Promise<any>, ProfileInitialState, unknown, ProfileActionTypes> => async (dispatch) => {
+export const postUserAvatar = (file: string): ThunkType => async (dispatch) => {
     try {
         let data = await profileAPI.setAvatar(file)
-        if (data.resultCode === 0) {
-            dispatch(setPhoto(data.data.photos));
-        }
+        if (data.resultCode === 0) dispatch(setPhoto(data.data.photos));
     }
     catch (err) {
         console.log(err);
     }
 }
 
-// FIXME Promise<any>
-export const saveProfile = (profile: RootProfileType): ThunkAction<Promise<any>, ProfileInitialState, unknown, Action<string>> => async (dispatch) => {
+export const saveProfile = (profile: RootProfileType): ThunkType => async (dispatch) => {
     let data = await profileAPI.setProfile(profile)
-    if (data.resultCode === 0) {
-        dispatch(getUserProfile(profile.userId));
-    } else {
+    if (data.resultCode === 0) dispatch(getUserProfile(profile.userId));
+    else {
         let message = data.messages[0];
         if (message.includes('Contacts')) {
             let errorField = message.split('>')[1].slice(0, -1).toLowerCase()
@@ -127,12 +124,9 @@ export const saveProfile = (profile: RootProfileType): ThunkAction<Promise<any>,
     }
 }
 
-export const updateUserStatus = (status: string): ThunkAction<Promise<void>, ProfileInitialState, unknown, ProfileActionTypes> => async (dispatch) => {
+export const updateUserStatus = (status: string): ThunkType => async (dispatch) => {
     let data = await profileAPI.updateStatus(status)
-    if (data.resultCode === 0) {
-        dispatch(setUserStatus(status));
-    }
-
+    if (data.resultCode === 0) dispatch(setUserStatus(status));
 }
 
 export default profileReducer;

@@ -5,8 +5,10 @@ let state = {
     posts: [
         { id: 1, text: 'Hey! How are you?', likes: 5 },
         { id: 2, text: 'It\'s my first post', likes: 20 }
-    ]
+    ],
+    status: 'Hello World!'
 }
+
 
 test('posts array length sould increment', () => {
     // test data

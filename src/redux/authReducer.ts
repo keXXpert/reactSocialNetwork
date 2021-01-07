@@ -1,4 +1,5 @@
-import { authAPI, securityAPI } from '../api/api'
+import { securityAPI } from "../api/endpoints/security";
+import { authAPI } from "../api/endpoints/auth";
 import { stopSubmit } from 'redux-form'
 import { ThunkAction } from 'redux-thunk';
 import { Action } from 'redux';
