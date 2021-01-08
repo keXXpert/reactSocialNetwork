@@ -10,7 +10,7 @@ let state = {
 }
 
 
-test('posts array length sould increment', () => {
+test('posts array length should increment', () => {
     // test data
     let action = addNewPost('New test post')
 
