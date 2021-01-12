@@ -74,9 +74,9 @@ export const usersActions = {
 }
 
 //thunk creators
-export const getUsers = (currentPage: number, usersOnPage: number): ThunkAction<Promise<void>, UsersInitialState, unknown, ActionsTypes> => async (dispatch) => {
+export const getUsers = (currentPage: number, usersOnPage: number, query: string = '', friends: boolean | null = null  ): ThunkAction<Promise<void>, UsersInitialState, unknown, ActionsTypes> => async (dispatch) => {
     dispatch(usersActions.toggleIsFetching(true));
-    let response = await usersAPI.getUsers(currentPage, usersOnPage);
+    let response = await usersAPI.getUsers(currentPage, usersOnPage, query, friends);
     dispatch(usersActions.toggleIsFetching(false));
     dispatch(usersActions.setUsers(response.items));
     dispatch(usersActions.setTotalUsersCount(response.totalCount));

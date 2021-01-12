@@ -17,7 +17,7 @@ test('posts array length should increment', () => {
     // action
     let newState = profileReducer(state, action)
 
-    //expectetion
+    //expectation
     expect(newState.posts.length).toBe(3)
 });
 
@@ -28,6 +28,6 @@ test('new post message should be correct', () => {
     // action
     let newState = profileReducer(state, action)
 
-    //expectetion
+    //expectation
     expect(newState.posts[2].text).toBe('New test post')
 });

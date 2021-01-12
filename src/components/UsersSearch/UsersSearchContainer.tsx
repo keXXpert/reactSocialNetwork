@@ -12,6 +12,8 @@ const UsersSearchContainer: React.FC<UsersHOCPropsType> = ({ currentPage, usersO
     setCurrentPage, users, totalUsersCount, followUser, isFetching, isFollowing }) => {
 
     useEffect(() => {
+        
+        // FIXME on Query change
         getUsers(currentPage, usersOnPage)
         // eslint-disable-next-line
     }, [currentPage, usersOnPage])
@@ -19,6 +21,11 @@ const UsersSearchContainer: React.FC<UsersHOCPropsType> = ({ currentPage, usersO
     const onPageClick = (pageNumber: number) => {
         setCurrentPage(pageNumber);
         getUsers(pageNumber, usersOnPage);
+    }
+
+    const onQuery = ({ query, friend }: { query: string, friend: boolean }) => {
+        setCurrentPage(1)
+        getUsers(1, usersOnPage, query, friend)
     }
 
     return <>
@@ -31,6 +38,8 @@ const UsersSearchContainer: React.FC<UsersHOCPropsType> = ({ currentPage, usersO
             followUser={followUser}
             onPageClick={onPageClick}
             isFollowing={isFollowing}
+            onQuery={onQuery}
+            isFetching={isFetching}
         />
     </>
 }
