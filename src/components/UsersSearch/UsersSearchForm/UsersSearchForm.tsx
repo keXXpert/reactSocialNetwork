@@ -2,16 +2,21 @@ import { Formik } from 'formik'
 import React from 'react'
 
 type SearchPropsType = {
-    onQuery: (values: { query: string, friend: boolean }) => void
+    onQuery: (values: FormValuesType) => void
     isFetching: boolean
+}
+
+export interface FormValuesType {
+    query: string
+    filter: ''
 }
 
 const UsersSearchForm = ({ onQuery, isFetching }: SearchPropsType) => {
     return (
         <div>
             <Formik
-                initialValues={{ query: '', friend: false }}
-                onSubmit={values => onQuery(values)}
+                initialValues={{ query: '', filter: '' }}
+                onSubmit={(values: FormValuesType) => onQuery(values)}
             >
                 {props => {
                     const {
@@ -24,7 +29,7 @@ const UsersSearchForm = ({ onQuery, isFetching }: SearchPropsType) => {
                         handleBlur,
                         handleSubmit,
                         handleReset
-                    } = props;
+                    } = props
                     return (
                         <form onSubmit={handleSubmit}>
                             <label htmlFor="query" style={{ display: "block" }}>
@@ -46,7 +51,17 @@ const UsersSearchForm = ({ onQuery, isFetching }: SearchPropsType) => {
                             {errors.query && touched.query && (
                                 <div className="input-feedback">{errors.query}</div>
                             )}
-
+                            <select
+                                name="filter"
+                                id="filter"
+                                value={values.filter}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                            >
+                                <option value="">All users</option>
+                                <option value="true">Following</option>
+                                <option value="false">Not following</option>
+                            </select>
                             <button
                                 type="button"
                                 className="outline"
@@ -58,10 +73,6 @@ const UsersSearchForm = ({ onQuery, isFetching }: SearchPropsType) => {
                             <button type="submit" disabled={isFetching}>
                                 Search
                             </button>
-                            <label htmlFor="friend" style={{ display: "block" }}>
-                                <input type='checkbox' id='friend' checked={values.friend} onChange={handleChange} />Friend
-                            </label>
-
                         </form>
                     );
                 }}

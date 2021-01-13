@@ -5,27 +5,41 @@ import { getUsers, followUser, usersActions } from '../../redux/usersReducer';
 import { getUsersSel, getUsersOnPageSel, getTotalUsersCountSel, getCurrentPageSel, getIsFetchingSel, getIsFollowingSel } from '../../redux/usersSelectors';
 import CssLoader from '../common/Preloader/CssLoader';
 import { RootState } from '../../redux/redux-store'
+import { FormValuesType } from './UsersSearchForm/UsersSearchForm';
 
 type UsersHOCPropsType = ConnectedProps<typeof connector>
 
-const UsersSearchContainer: React.FC<UsersHOCPropsType> = ({ currentPage, usersOnPage, getUsers,
-    setCurrentPage, users, totalUsersCount, followUser, isFetching, isFollowing }) => {
+const UsersSearchContainer: React.FC<UsersHOCPropsType> = ({
+    currentPage,
+    usersOnPage,
+    filter,
+    query,
+    getUsers,
+    setCurrentPage,
+    users,
+    totalUsersCount,
+    followUser,
+    isFetching,
+    isFollowing,
+    setFilter,
+    setQuery
+}) => {
 
     useEffect(() => {
-        
-        // FIXME on Query change
-        getUsers(currentPage, usersOnPage)
+        getUsers(currentPage, usersOnPage, query, filter)
+
         // eslint-disable-next-line
-    }, [currentPage, usersOnPage])
+    }, [currentPage, usersOnPage, filter, query])
 
     const onPageClick = (pageNumber: number) => {
         setCurrentPage(pageNumber);
         getUsers(pageNumber, usersOnPage);
     }
 
-    const onQuery = ({ query, friend }: { query: string, friend: boolean }) => {
+    const onQuery = ({ query, filter }: FormValuesType) => {
+        setFilter(filter)
+        setQuery(query)
         setCurrentPage(1)
-        getUsers(1, usersOnPage, query, friend)
     }
 
     return <>
@@ -45,7 +59,7 @@ const UsersSearchContainer: React.FC<UsersHOCPropsType> = ({ currentPage, usersO
 }
 
 // Class component just for demo purposes
-//
+
 // class UsersSearchContainer extends React.Component {
 //     componentDidMount() {
 //         this.props.getUsers(this.props.currentPage, this.props.usersOnPage);
@@ -81,11 +95,19 @@ let mapStateToProps = (state: RootState) => {
         totalUsersCount: getTotalUsersCountSel(state),
         currentPage: getCurrentPageSel(state),
         isFetching: getIsFetchingSel(state),
-        isFollowing: getIsFollowingSel(state)
+        isFollowing: getIsFollowingSel(state),
+        filter: state.usersPage.filter,
+        query: state.usersPage.query
     }
 }
 
 const connector = connect(mapStateToProps,
-    { followUser, setCurrentPage: usersActions.setCurrentPage, getUsers })
+    {
+        followUser,
+        setCurrentPage: usersActions.setCurrentPage,
+        setQuery: usersActions.setQuery,
+        setFilter: usersActions.setFilter,
+        getUsers
+    })
 
 export default connector(UsersSearchContainer);

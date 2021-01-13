@@ -12,6 +12,8 @@ const SET_CURRENT_PAGE = 'users/SET-CURRENT-PAGE';
 const SET_TOTAL_USERS_COUNT = 'users/SET-TOTAL-USERS-COUNT';
 const TOGGLE_FETCHING = 'users/TOGGLE-FETCHING';
 const TOGGLE_FOLLOWING = 'users/TOGGLE-FOLLOWING';
+const SET_USERS_QUERY = 'users/SET-USERS-QUERY';
+const SET_USERS_FILTER = 'users/SET-USERS-FILTER';
 
 let initialState = {
     users: [] as Array<UsersType>,
@@ -19,7 +21,9 @@ let initialState = {
     totalUsersCount: 19,
     currentPage: 1,
     isFetching: false,
-    isFollowing: [] as Array<number>
+    isFollowing: [] as Array<number>,
+    query: '',
+    filter: ''
 }
 
 
@@ -45,6 +49,12 @@ const searchUsersReducer = (state = initialState, action: ActionsTypes): UsersIn
         case SET_TOTAL_USERS_COUNT: {
             return { ...state, totalUsersCount: action.totalUsersCount }
         }
+        case SET_USERS_QUERY: {
+            return { ...state, query: action.query }
+        }
+        case SET_USERS_FILTER: {
+            return { ...state, filter: action.filter }
+        }
         case TOGGLE_FETCHING: {
             return { ...state, isFetching: action.isFetching }
         }
@@ -69,14 +79,16 @@ export const usersActions = {
     setUsers: (users: Array<UsersType>) => ({ type: SET_USERS, users } as const),
     setCurrentPage: (currentPage: number) => ({ type: SET_CURRENT_PAGE, currentPage } as const),
     setTotalUsersCount: (totalUsersCount: number) => ({ type: SET_TOTAL_USERS_COUNT, totalUsersCount } as const),
+    setQuery: (query: string) => ({ type: SET_USERS_QUERY, query } as const),
+    setFilter: (filter: string) => ({ type: SET_USERS_FILTER, filter } as const),
     toggleIsFetching: (isFetching: boolean) => ({ type: TOGGLE_FETCHING, isFetching } as const),
     toggleIsFollowing: (isFollowing: boolean, userId: number) => ({ type: TOGGLE_FOLLOWING, isFollowing, userId } as const)
 }
 
 //thunk creators
-export const getUsers = (currentPage: number, usersOnPage: number, query: string = '', friends: boolean | null = null  ): ThunkAction<Promise<void>, UsersInitialState, unknown, ActionsTypes> => async (dispatch) => {
+export const getUsers = (currentPage: number, usersOnPage: number, query: string = '', filter: string = ''): ThunkAction<Promise<void>, UsersInitialState, unknown, ActionsTypes> => async (dispatch) => {
     dispatch(usersActions.toggleIsFetching(true));
-    let response = await usersAPI.getUsers(currentPage, usersOnPage, query, friends);
+    let response = await usersAPI.getUsers(currentPage, usersOnPage, query, filter);
     dispatch(usersActions.toggleIsFetching(false));
     dispatch(usersActions.setUsers(response.items));
     dispatch(usersActions.setTotalUsersCount(response.totalCount));

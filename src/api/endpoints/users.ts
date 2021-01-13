@@ -8,9 +8,9 @@ export type GetUsersResponseType = {
 }
 
 export const usersAPI = {
-    getUsers(page = 1, usersOnPage = 10, query = '', friends: boolean | null = null) {
+    getUsers(page = 1, usersOnPage = 10, query = '', filter: string = '') {
         return instance
-            .get<GetUsersResponseType>(`users?page=${page}&count=${usersOnPage}&term=${query}&friend=${friends != null ? friends : ''}`)
+            .get<GetUsersResponseType>(`users?page=${page}&count=${usersOnPage}&term=${query}&friend=${filter}`)
             .then(res => res.data);
     }
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import UserItem from './UserItem/UserItem';
-import UsersSearchForm from './UsersSearchForm/UsersSearchForm'
+import UsersSearchForm, { FormValuesType } from './UsersSearchForm/UsersSearchForm'
 // import myCSS from './UsersSearch.module.css'
 import Paginator from '../common/Paginator/Paginator';
 import { UsersType } from '../../types/types';
@@ -13,7 +13,7 @@ interface UsersSearchPropsType {
     followUser: (id: number, follow: boolean) => void
     isFollowing: Array<number>
     onPageClick: (page: number) => void
-    onQuery: (values: { query: string, friend: boolean }) => void
+    onQuery: (values: FormValuesType) => void
     isFetching: boolean
 }
 
