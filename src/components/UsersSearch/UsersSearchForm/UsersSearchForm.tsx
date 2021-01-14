@@ -4,18 +4,21 @@ import React from 'react'
 type SearchPropsType = {
     onQuery: (values: FormValuesType) => void
     isFetching: boolean
+    filter: string
+    query: string
 }
 
 export interface FormValuesType {
     query: string
-    filter: ''
+    filter: string
 }
 
-const UsersSearchForm = ({ onQuery, isFetching }: SearchPropsType) => {
+const UsersSearchForm = ({ onQuery, isFetching, filter, query }: SearchPropsType) => {
     return (
         <div>
             <Formik
-                initialValues={{ query: '', filter: '' }}
+                enableReinitialize
+                initialValues={{ query: query, filter: filter }}
                 onSubmit={(values: FormValuesType) => onQuery(values)}
             >
                 {props => {

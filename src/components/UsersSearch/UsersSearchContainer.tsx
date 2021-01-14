@@ -6,6 +6,8 @@ import { getUsersSel, getUsersOnPageSel, getTotalUsersCountSel, getCurrentPageSe
 import CssLoader from '../common/Preloader/CssLoader';
 import { RootState } from '../../redux/redux-store'
 import { FormValuesType } from './UsersSearchForm/UsersSearchForm';
+import { useHistory } from 'react-router-dom';
+import qs from 'qs'
 
 type UsersHOCPropsType = ConnectedProps<typeof connector>
 
@@ -25,8 +27,27 @@ const UsersSearchContainer: React.FC<UsersHOCPropsType> = ({
     setQuery
 }) => {
 
+    const history = useHistory()
+
+    useEffect(() => {
+        const { search } = history.location
+        const filters = search ? qs.parse(search.substr(1)) : {}
+        if (filters.query) setQuery(filters.query as string)
+        if (filters.filter) setFilter(filters.filter as string)
+        if (filters.page) setCurrentPage(+filters.page)
+
+        // eslint-disable-next-line
+    }, [])
+
     useEffect(() => {
         getUsers(currentPage, usersOnPage, query, filter)
+        const queryArr = []
+        if (currentPage !== 1) queryArr.push('page=' + currentPage)
+        if (query) queryArr.push('query=' + query)
+        if (filter) queryArr.push('filter=' + filter)
+        history.push({
+            search: queryArr.length ? '?' + queryArr.join('&') : ''
+        })
 
         // eslint-disable-next-line
     }, [currentPage, usersOnPage, filter, query])
@@ -54,6 +75,8 @@ const UsersSearchContainer: React.FC<UsersHOCPropsType> = ({
             isFollowing={isFollowing}
             onQuery={onQuery}
             isFetching={isFetching}
+            filter={filter}
+            query={query}
         />
     </>
 }
