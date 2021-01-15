@@ -8,12 +8,7 @@ Intentionally made without class components (using Hooks).
 
 Build deployed on: https://kexxpert.online/social
 
-For testing please use these credentials:
-
-Login: free@samuraijs.com
-
-Password: free
-
+For testing please contact me for credentials.
 
 Social Network has the following functionality:
 - Initial app layout
