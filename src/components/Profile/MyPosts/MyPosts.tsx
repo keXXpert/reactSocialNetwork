@@ -5,6 +5,7 @@ import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 import { requiredField, maxLengthCreator } from '../../../utils/validators/validatos';
 import { CustomTextarea } from '../../common/Forms/FormsElems';
 import { MyPostsHOCPropsType } from './MyPostsContainer';
+import { Divider } from 'antd';
 
 type MyPostsFormData = {
     newPost: string
@@ -43,13 +44,13 @@ const MyPosts: React.FC<MyPostsHOCPropsType> = ({ posts, addNewPost }) => {
 
     return (
         <div className={myCSS.postsBlock}>
-            <h3>My Posts</h3>
+            <Divider plain>My Posts</Divider>
+            <div className={myCSS.posts}>
+                {postsElements}
+            </div>
             <div>
                 <p>New Post</p>
                 <ReduxPostForm onSubmit={onSubmit} />
-            </div>
-            <div className={myCSS.posts}>
-                {postsElements}
             </div>
         </div>
     )

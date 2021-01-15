@@ -1,17 +1,37 @@
-import React from 'react';
-import myCSS from './Header.module.css';
-import { NavLink } from 'react-router-dom';
-import { HeaderHOCPropsType } from './HeaderContainer';
+import React from 'react'
+import myCSS from './Header.module.css'
+import { NavLink } from 'react-router-dom'
+import { HeaderHOCPropsType } from './HeaderContainer'
+import { Header } from 'antd/lib/layout/layout'
+import { Menu } from 'antd'
+import Avatar from 'antd/lib/avatar/avatar'
+import { UserOutlined } from '@ant-design/icons'
 
-const Header: React.FC<HeaderHOCPropsType> = ({ auth: { login, isAuthed }, getLogout }) => {
-    return <header className={myCSS.header}>
-        <img src='https://dynamic.brandcrowd.com/asset/logo/523ee409-81f7-4d7a-900d-81e1e2473a2b/logo?v=4' alt='Social Network Logo' />
-        <div className={myCSS.loginBlock}>
-            {isAuthed
-                ? <div> <strong>{login}</strong><p><button onClick={getLogout}>Log Out</button></p></div>
-                : <NavLink to='/login'>Login</NavLink>}
-        </div>
-    </header>
+const AppHeader: React.FC<HeaderHOCPropsType> = ({ auth: { login, isAuthed }, getLogout }) => {
+    return (
+        <Header className="header">
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <div className={'logo ' + myCSS.logoText}>
+                    React Social Network
+            </div>
+                <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}
+                >
+                    <Menu.Item key="1">
+                        {isAuthed
+                            ? <NavLink to='/profile'>
+                                <Avatar style={{ marginRight: '1rem' }} icon={<UserOutlined />} />{login}
+                            </NavLink>
+                            : <NavLink to='/login'>Login</NavLink>}
+                    </Menu.Item>
+                    {isAuthed &&
+                        <Menu.Item key="2">
+                            <NavLink onClick={getLogout} to='/login'>Log Out</NavLink>
+                        </Menu.Item>
+                    }
+                </Menu>
+            </div>
+        </Header>
+    )
 }
 
-export default Header;
+export default AppHeader

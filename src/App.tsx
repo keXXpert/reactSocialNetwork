@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
-import { Route, withRouter, BrowserRouter, Switch, Redirect } from 'react-router-dom';
+import { Route, withRouter, BrowserRouter, Switch, Redirect, NavLink } from 'react-router-dom';
 import { compose } from 'redux';
 import { connect, ConnectedProps, Provider } from 'react-redux';
 import store, { RootState } from './redux/redux-store';
 import './App.css';
 
 // My components
-import Navbar from './components/Navbar/Navbar';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
 import Music from './components/Music/Music';
 import News from './components/News/News';
@@ -17,6 +16,9 @@ import HeaderContainer from './components/Header/HeaderContainer';
 import Login from './components/Login/Login';
 import { initializeApp } from './redux/appReducer';
 import Preloader from './components/common/Preloader/Preloader';
+import { Layout, Menu, Breadcrumb } from 'antd';
+
+const { Content, Footer, Sider } = Layout;
 
 // class AppChild extends React.Component {
 //   componentDidMount() {
@@ -48,35 +50,68 @@ const AppChild: React.FC<AppHOCPropsType> = ({ initializeApp, initialized }) => 
   if (!initialized) return <Preloader />
   return (
 
-    <div className='app-wrapper'>
+    <Layout>
       <HeaderContainer />
-      <Navbar />
-      <div className='app-wrapper-content'>
-        <Switch>
-          <Route
-            exact path='/'
-            render={() => <Redirect to='/profile' />}
-          />
-          <Route
-            path='/profile/:userId?'
-            render={() => <ProfileContainer />}
-          />
-          <Route
-            path='/dialogs'
-            render={() => <DialogsContainer />}
-          />
-          <Route path='/news' component={News} />
-          <Route path='/music' component={Music} />
-          <Route path='/login' component={Login} />
-          <Route
-            path='/users'
-            render={() => <UsersSearchContainer />}
-          />
-          <Route path='/settings' component={Settings} />
-          <Route path='*' render={() => <div>ERROR 404. The requested page is not found.</div>} />
-        </Switch>
-      </div>
-    </div>
+      <Content style={{ padding: '0 50px' }}>
+        <Breadcrumb style={{ margin: '16px 0' }}>
+          <Breadcrumb.Item>Home</Breadcrumb.Item>
+          <Breadcrumb.Item>Profile</Breadcrumb.Item>
+        </Breadcrumb>
+        <Layout className="site-layout-background" style={{ padding: '24px 0' }}>
+          <Sider className="site-layout-background" width={200}>
+            <Menu
+              mode="inline"
+              defaultSelectedKeys={['1']}
+              defaultOpenKeys={['sub1']}
+              style={{ height: '100%' }}
+            >
+              {/* <SubMenu key="sub1" icon={<UserOutlined />} title="subnav 1"> */}
+              <Menu.Item key="1"><NavLink to='/profile' >Profile</NavLink></Menu.Item>
+              <Menu.Item key="2"><NavLink to='/dialogs' >Messages</NavLink></Menu.Item>
+              <Menu.Item key="3"><NavLink to='/users' >Users</NavLink></Menu.Item>
+              <Menu.Item key="4"><NavLink to='/news' >News</NavLink></Menu.Item>
+              <Menu.Item key="5"><NavLink to='/music' >Music</NavLink></Menu.Item>
+              <Menu.Item key="6"><NavLink to='/settings' >Settings</NavLink></Menu.Item>
+              {/* </SubMenu> */}
+            </Menu>
+          </Sider>
+          <Content style={{ padding: '0 24px', minHeight: 280 }}>
+            <Switch>
+              <Route
+                exact path='/'
+                render={() => <Redirect to='/profile' />}
+              />
+              <Route
+                path='/profile/:userId?'
+                render={() => <ProfileContainer />}
+              />
+              <Route
+                path='/dialogs'
+                render={() => <DialogsContainer />}
+              />
+              <Route path='/news' component={News} />
+              <Route path='/music' component={Music} />
+              <Route path='/login' component={Login} />
+              <Route
+                path='/users'
+                render={() => <UsersSearchContainer />}
+              />
+              <Route path='/settings' component={Settings} />
+              <Route path='*' render={() => <div>ERROR 404. The requested page is not found.</div>} />
+            </Switch>
+          </Content>
+        </Layout>
+      </Content>
+      <Footer style={{ textAlign: 'center' }}>React Social Network ©2019-2021 created by keXXpert</Footer>
+    </Layout>
+
+    // <div className='app-wrapper'>
+    //   <HeaderContainer />
+    //   <Navbar />
+    //   <div className='app-wrapper-content'>
+
+    //   </div>
+    // </div>
 
   );
 }
