@@ -17,6 +17,7 @@ import Login from './components/Login/Login';
 import { initializeApp } from './redux/appReducer';
 import Preloader from './components/common/Preloader/Preloader';
 import { Layout, Menu, Breadcrumb } from 'antd';
+import ChatPage from './pages/Chat';
 
 const { Content, Footer, Sider } = Layout;
 
@@ -69,9 +70,10 @@ const AppChild: React.FC<AppHOCPropsType> = ({ initializeApp, initialized }) => 
               <Menu.Item key="1"><NavLink to='/profile' >Profile</NavLink></Menu.Item>
               <Menu.Item key="2"><NavLink to='/dialogs' >Messages</NavLink></Menu.Item>
               <Menu.Item key="3"><NavLink to='/users' >Users</NavLink></Menu.Item>
-              <Menu.Item key="4"><NavLink to='/news' >News</NavLink></Menu.Item>
-              <Menu.Item key="5"><NavLink to='/music' >Music</NavLink></Menu.Item>
-              <Menu.Item key="6"><NavLink to='/settings' >Settings</NavLink></Menu.Item>
+              <Menu.Item key="4"><NavLink to='/chat' >Chat</NavLink></Menu.Item>
+              <Menu.Item key="5"><NavLink to='/news' >News</NavLink></Menu.Item>
+              <Menu.Item key="6"><NavLink to='/music' >Music</NavLink></Menu.Item>
+              <Menu.Item key="7"><NavLink to='/settings' >Settings</NavLink></Menu.Item>
               {/* </SubMenu> */}
             </Menu>
           </Sider>
@@ -92,6 +94,7 @@ const AppChild: React.FC<AppHOCPropsType> = ({ initializeApp, initialized }) => 
               <Route path='/news' component={News} />
               <Route path='/music' component={Music} />
               <Route path='/login' component={Login} />
+              <Route path='/chat' component={ChatPage} />
               <Route
                 path='/users'
                 render={() => <UsersSearchContainer />}
