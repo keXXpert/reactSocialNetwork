@@ -1,3 +1,5 @@
+const WEB_SOCKET_URL = 'wss://social-network.samuraijs.com/handlers/ChatHandler.ashx'
+
 export const chatAPI = {
     _subscribersMessages: [] as TSubscriptionCallback[],
     _subscribersStatus: [] as TSubscriptionStatusCallback[],
@@ -6,7 +8,7 @@ export const chatAPI = {
     _interval: null as number | null,
     create() {
         this.destroy()
-        this._ws = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx')
+        this._ws = new WebSocket(WEB_SOCKET_URL)
         this._ws.addEventListener('close', this._closeHandler.bind(this))
         this._ws.addEventListener('open', this._openHandler.bind(this))
         this._ws.addEventListener('message', this._messageHandler.bind(this))
@@ -15,11 +17,12 @@ export const chatAPI = {
         this._ws?.removeEventListener('close', this._closeHandler.bind(this))
         this._ws?.removeEventListener('open', this._openHandler.bind(this))
         this._ws?.removeEventListener('message', this._messageHandler.bind(this))
-        this._ws?.close()
+        if (this._ws && this._ws.readyState < 2) this._ws.close()
         this._ws = null
     },
     sendMessage(message: string) {
-        this._ws?.send(message)
+        if (this._ws?.OPEN) this._ws?.send(message)
+        else this._isOnline = false
     },
     subscribeMessage(callback: TSubscriptionCallback) {
         if (!this._ws) this.create()
@@ -41,12 +44,16 @@ export const chatAPI = {
     },
     _openHandler() {
         this._isOnline = true
-        if (this._interval) window.clearInterval(this._interval)
+        if (this._interval) {
+            window.clearInterval(this._interval)
+            this._interval = null
+        }
         this._subscribersStatus.forEach(callback => callback(this._isOnline))
     },
     _closeHandler() {
         this._isOnline = false
         this._subscribersStatus.forEach(callback => callback(this._isOnline))
+        if (this._interval) window.clearInterval(this._interval)
         this._interval = window.setInterval(this.create.bind(this), 2000)
     }
 };

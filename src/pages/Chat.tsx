@@ -1,9 +1,10 @@
-import React, {FormEvent, useCallback, useEffect, useState} from 'react'
+import React, {FormEvent, useCallback, useEffect, useRef, useState} from 'react'
 import {chatAPI} from '../api/endpoints/chat-ws'
 
 // const ws = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx')
 
 export default function ChatPage() {
+    const scrollRef = useRef<HTMLDivElement | null>(null)
     const [messages, setMessages] = useState<IMessage[]>([])
     const [newMessage, setNewMessage] = useState('')
     const [isWsReady, setWsReady] = useState(false)
@@ -21,8 +22,16 @@ export default function ChatPage() {
         chatAPI.subscribeMessage(handleNewMessages)
         chatAPI.subscribeStatus(handleStatusChange)
 
-        return () => chatAPI.destroy()
+        return () => {
+            chatAPI.unsubscribeMessage(handleNewMessages)
+            chatAPI.unsubscribeStatus(handleStatusChange)
+            chatAPI.destroy()
+        }
     }, [handleNewMessages, handleStatusChange])
+
+    useEffect(() => {
+        scrollRef.current?.scrollIntoView()
+    }, [scrollRef, messages])
 
     const handleSendMessage = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -40,6 +49,7 @@ export default function ChatPage() {
                     <hr />
                 </div>
             ))}
+            <div ref={scrollRef} />
         </div>
         <form onSubmit={handleSendMessage}>
             <div>
